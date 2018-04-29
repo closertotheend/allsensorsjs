@@ -1,9 +1,8 @@
 import GlobalSensorMonitor from "./monitors";
-
-export default class GlobalSensor {
-  listeners = [];
-
+import {serializeDeviceOrientationEvent, serializeState} from "./serialziers";
+export class GlobalSensor {
   constructor(opts) {
+    this.listeners = [];
     if (opts && opts.queryPeriod) {
       this.queryPeriod = opts.queryPeriod;
     }
@@ -26,3 +25,5 @@ export default class GlobalSensor {
     this.listeners = [];
   }
 }
+
+export {serializeState, serializeDeviceOrientationEvent, GlobalSensorMonitor}

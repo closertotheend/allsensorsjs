@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/ilja903/allsensorsjs/issues"
   },
-  "homepage": "https://github.com/ilja903/allsensorsjs#readme"
+  "homepage": "https://github.com/ilja903/allsensorsjs#readme",
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "rollup": "^0.58.2",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0"
+  }
 }

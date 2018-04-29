@@ -1,4 +1,4 @@
-function serializeState(state) {
+export function serializeState(state) {
   const serialized = {};
 
   if (state.battery) {
@@ -26,7 +26,7 @@ function serializeState(state) {
   return serialized;
 }
 
-function serializeDeviceMotionEvent({
+export function serializeDeviceMotionEvent({
   acceleration,
   accelerationIncludingGravity,
   interval,
@@ -54,7 +54,7 @@ function serializeDeviceMotionEvent({
   };
 }
 
-function serializeNavigator({
+export function serializeNavigator({
   appCodeName,
   appVersion,
   deviceMemory,
@@ -91,7 +91,7 @@ function serializeNavigator({
   };
 }
 
-function serializeBatteryManager({
+export function serializeBatteryManager({
   charging,
   chargingTime,
   dischargingTime,
@@ -100,7 +100,7 @@ function serializeBatteryManager({
   return { charging, chargingTime, dischargingTime, level };
 }
 
-function serializePosition({ coords }) {
+export function serializePosition({ coords }) {
   const {
     latitude,
     longitude,
@@ -123,7 +123,7 @@ function serializePosition({ coords }) {
   };
 }
 
-function serializeDeviceOrientationEvent({
+export function serializeDeviceOrientationEvent({
   alpha,
   beta,
   gamma,
@@ -133,7 +133,3 @@ function serializeDeviceOrientationEvent({
 }) {
   return { alpha, beta, gamma, absolute, bubbles, timeStamp };
 }
-
-module.exports = {
-  serializeState
-};

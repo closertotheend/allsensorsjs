@@ -1,7 +1,10 @@
-import _ from "lodash";
+import throttle from "lodash/throttle";
 
 export default class GlobalSensorMonitor {
-  state = {};
+
+  constructor(){
+    this.state = {};
+  }
 
   initialize(queryPeriod) {
     if (queryPeriod === undefined || queryPeriod === null) {
@@ -26,7 +29,7 @@ export default class GlobalSensorMonitor {
   }
 
   throttlify(func) {
-    return _.throttle(func, this.queryPeriod);
+    return throttle(func, this.queryPeriod);
   }
 }
 
