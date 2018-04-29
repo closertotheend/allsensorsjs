@@ -8,7 +8,7 @@ export default {
     output: {
         file: 'index.js',
         format: 'umd',
-        name: 'globalSensor',
+        name: 'allsensors',
         sourcemap: true
     },
     plugins: [

@@ -6,11 +6,14 @@
 </head>
 
 <body>
-<div id="content">Content of the document..... </div>
-<script src="bundle.js"></script>
+<div id="content">Loading content of the document..... </div>
+<script src="index.js"></script>
 <script>
-        debugger
-        new GlobalSensor()
+        var gs = new allsensors.GlobalSensor()
+        gs.listen((state)=>{
+            var serialized = allsensors.serializeState(state);
+            document.getElementById("content").innerHTML = JSON.stringify(serialized)
+        })
     </script>
 </body>
 
