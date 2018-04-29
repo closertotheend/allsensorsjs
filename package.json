@@ -1,0 +1,19 @@
+{
+  "name": "allsensorsjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilja903/allsensorsjs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ilja903/allsensorsjs/issues"
+  },
+  "homepage": "https://github.com/ilja903/allsensorsjs#readme"
+}
