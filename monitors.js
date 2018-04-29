@@ -1,44 +1,48 @@
 import throttle from "lodash/throttle";
 
-export default class GlobalSensorMonitor {
 
-  constructor(){
-    this.state = {};
-  }
+class SensorMonitor {
 
-  initialize({queryPeriod} = {}) {
+  constructor({queryPeriod, state} = { state:{}}){
+    this.state = state;
     if (queryPeriod === undefined || queryPeriod === null) {
       queryPeriod = 0;
     }
-
-    this.queryPeriod = queryPeriod;
-    const state = this.state;
-    const throttlify = queryPeriod === 0 ? x => x : this.throttlify.bind(this);
-    const args = { state, queryPeriod, throttlify };
-
-    new BatteryMonitor(args).initialize();
-    new GeolocationMonitor(args).initialize();
-    new DeviceOrientationMonitor(args).initialize();
-    new DeviceMotionMonitor(args).initialize();
-    new DeviceLightMonitor(args).initialize();
-    new DeviceProximityMonitor(args).initialize();
-    new DeviceAmbientLightMonitor(args).initialize();
-    new DeviceNavigatorMonitor(args).initialize();
-
+    this.throttlify = queryPeriod === 0 ? x => x : throttle.bind(this, undefined, this.queryPeriod);
+    this.beginListening();
     return this;
   }
 
-  throttlify(func) {
-    return throttle(func, this.queryPeriod);
+  beginListening(){
   }
 }
 
-class BatteryMonitor {
-  constructor(args) {
-    Object.assign(this, args);
+export default class GlobalSensorMonitor extends SensorMonitor{
+
+  constructor(){
+    super();
   }
 
-  initialize() {
+  beginListening(){
+    const args = {state: this.state, queryPeriod: this.queryPeriod};
+    new BatteryMonitor(args);
+    new GeolocationMonitor(args);
+    new DeviceOrientationMonitor(args);
+    new DeviceMotionMonitor(args);
+    new DeviceLightMonitor(args);
+    new DeviceProximityMonitor(args);
+    new DeviceAmbientLightMonitor(args);
+    new DeviceNavigatorMonitor(args);
+  }
+}
+
+class BatteryMonitor extends SensorMonitor{
+  
+  constructor(args){
+    super(args);
+  }
+
+  beginListening () {
     if (navigator.getBattery) {
       navigator.getBattery().then(battery => {
         this.state.battery = battery;
@@ -50,12 +54,12 @@ class BatteryMonitor {
   }
 }
 
-class GeolocationMonitor {
-  constructor(args) {
-    Object.assign(this, args);
+class GeolocationMonitor extends SensorMonitor{
+  constructor(args){
+    super(args);
   }
 
-  initialize() {
+  beginListening() {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(
         geo => {
@@ -72,12 +76,12 @@ class GeolocationMonitor {
   }
 }
 
-class DeviceOrientationMonitor {
+class DeviceOrientationMonitor extends SensorMonitor{
   constructor(args) {
-    Object.assign(this, args);
+    super(args);
   }
 
-  initialize() {
+  beginListening() {
     window.addEventListener(
       "deviceorientation",
       this.throttlify(deviceorientation => {
@@ -88,12 +92,13 @@ class DeviceOrientationMonitor {
   }
 }
 
-class DeviceMotionMonitor {
+class DeviceMotionMonitor extends SensorMonitor{
   constructor(args) {
-    Object.assign(this, args);
+    super(args);
   }
 
-  initialize() {
+
+  beginListening() {
     window.addEventListener(
       "devicemotion",
       this.throttlify(devicemotion => {
@@ -104,12 +109,13 @@ class DeviceMotionMonitor {
   }
 }
 
-class DeviceLightMonitor {
+class DeviceLightMonitor extends SensorMonitor{
   constructor(args) {
-    Object.assign(this, args);
+    super(args);
   }
 
-  initialize() {
+
+  beginListening() {
     window.addEventListener(
       "devicelight",
       this.throttlify(devicelight => {
@@ -120,12 +126,12 @@ class DeviceLightMonitor {
   }
 }
 
-class DeviceProximityMonitor {
+class DeviceProximityMonitor extends SensorMonitor{
   constructor(args) {
-    Object.assign(this, args);
+    super(args);
   }
 
-  initialize() {
+  beginListening() {
     window.addEventListener(
       "deviceproximity",
       this.throttlify(deviceproximity => {
@@ -136,12 +142,12 @@ class DeviceProximityMonitor {
   }
 }
 
-class DeviceAmbientLightMonitor {
+class DeviceAmbientLightMonitor extends SensorMonitor{
   constructor(args) {
-    Object.assign(this, args);
+    super(args);
   }
 
-  initialize() {
+  beginListening() {
     if ("AmbientLightSensor" in window) {
       const sensor = new window.AmbientLightSensor();
       sensor.onreading = () => {
@@ -155,12 +161,12 @@ class DeviceAmbientLightMonitor {
   }
 }
 
-class DeviceNavigatorMonitor {
+class DeviceNavigatorMonitor extends SensorMonitor {
   constructor(args) {
-    Object.assign(this, args);
+    super(args);
   }
 
-  initialize() {
+  beginListening() {
     setTimeout(() => {
       this.state.navigator = navigator;
     }, this.queryPeriod);

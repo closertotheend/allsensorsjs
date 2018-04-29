@@ -9,20 +9,18 @@ import {
 } from "./serialziers";
 
 class Sensor{
-  constructor(opts, monitor, serializeFn) {
+  constructor({queryPeriod} = {}, monitorClass, serializeFn) {
     this.listeners = [];
-    if (opts && opts.queryPeriod) {
+    if (queryPeriod) {
       this.queryPeriod = opts.queryPeriod;
     }
 
-    const globalSensorMonitor = monitor.initialize(
-      this.queryPeriod
-    );
+    const monitor = new monitorClass({queryPeriod: this.queryPeriod})
 
     this.serialize = serializeFn.bind(this)
 
     setInterval(() => {
-      const state = globalSensorMonitor.state;
+      const state = monitor.state;
       this.listeners.forEach(listener => listener.call(null, state));
     }, this.queryPeriod);
   }
@@ -38,7 +36,7 @@ class Sensor{
 export class GlobalSensor extends Sensor{
   constructor(opts) {
   serializeState,
-    super(opts, new GlobalSensorMonitor(), serializeState);
+    super(opts, GlobalSensorMonitor, serializeState);
   }
 }
 
