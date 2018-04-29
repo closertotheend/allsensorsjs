@@ -11,7 +11,7 @@
 <script>
         var gs = new allsensors.GlobalSensor()
         gs.listen((state)=>{
-            var serialized = allsensors.serializeState(state);
+            var serialized = gs.serialize(state);
             document.getElementById("content").innerHTML = JSON.stringify(serialized)
         })
     </script>

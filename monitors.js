@@ -6,7 +6,7 @@ export default class GlobalSensorMonitor {
     this.state = {};
   }
 
-  initialize(queryPeriod) {
+  initialize({queryPeriod} = {}) {
     if (queryPeriod === undefined || queryPeriod === null) {
       queryPeriod = 0;
     }

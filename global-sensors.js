@@ -1,15 +1,25 @@
 import GlobalSensorMonitor from "./monitors";
-import {serializeDeviceOrientationEvent, serializeState} from "./serialziers";
-export class GlobalSensor {
-  constructor(opts) {
+import {
+  serializeState,
+  serializeBatteryManager,
+  serializePosition,
+  serializeDeviceOrientationEvent,
+  serializeDeviceMotionEvent,
+  serializeNavigator
+} from "./serialziers";
+
+class Sensor{
+  constructor(opts, monitor, serializeFn) {
     this.listeners = [];
     if (opts && opts.queryPeriod) {
       this.queryPeriod = opts.queryPeriod;
     }
 
-    const globalSensorMonitor = new GlobalSensorMonitor().initialize(
+    const globalSensorMonitor = monitor.initialize(
       this.queryPeriod
     );
+
+    this.serialize = serializeFn.bind(this)
 
     setInterval(() => {
       const state = globalSensorMonitor.state;
@@ -25,5 +35,18 @@ export class GlobalSensor {
     this.listeners = [];
   }
 }
+export class GlobalSensor extends Sensor{
+  constructor(opts) {
+  serializeState,
+    super(opts, new GlobalSensorMonitor(), serializeState);
+  }
+}
 
-export {serializeState, serializeDeviceOrientationEvent, GlobalSensorMonitor}
+export {
+  serializeState,
+  serializeBatteryManager,
+  serializePosition,
+  serializeDeviceOrientationEvent,
+  serializeDeviceMotionEvent,
+  serializeNavigator
+}
