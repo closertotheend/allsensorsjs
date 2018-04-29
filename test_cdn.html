@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sensors test page</title>
+</head>
+
+<body>
+<div id="content">Loading content of the document..... </div>
+<script src="https://cdn.rawgit.com/ilja903/allsensorsjs/f2146544/index.js"></script>
+<script>
+        var gs = new allsensors.GlobalSensor()
+        gs.listen((state)=>{
+            var serialized = allsensors.serializeState(state);
+            document.getElementById("content").innerHTML = JSON.stringify(serialized)
+        })
+    </script>
+</body>
+
+</html>
