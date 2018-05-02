@@ -1,12 +1,12 @@
-import { BatteryMonitor, GlobalSensorMonitor } from './monitors'
-import {
+const { BatteryMonitor, GlobalSensorMonitor } = require('./monitors')
+const {
   serializeBatteryManager,
   serializeDeviceMotionEvent,
   serializeDeviceOrientationEvent,
   serializeNavigator,
   serializePosition,
   serializeState
-} from './serialziers'
+} = require('./serialziers')
 
 class Sensor {
   constructor (opts, monitorClass, serializeFn) {
@@ -37,23 +37,25 @@ class Sensor {
   }
 }
 
-export class GlobalSensor extends Sensor {
+class GlobalSensor extends Sensor {
   constructor (opts) {
     super(opts, GlobalSensorMonitor, serializeState)
   }
 }
 
-export class BatteryMonitorSensor extends Sensor {
+class BatteryMonitorSensor extends Sensor {
   constructor (opts) {
     super(opts, BatteryMonitor, serializeBatteryManager)
   }
 }
 
-export {
+module.exports = {
   serializeState,
   serializeBatteryManager,
   serializePosition,
   serializeDeviceOrientationEvent,
   serializeDeviceMotionEvent,
-  serializeNavigator
+  serializeNavigator,
+  GlobalSensor,
+  BatteryMonitorSensor
 }

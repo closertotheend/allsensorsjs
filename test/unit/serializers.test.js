@@ -1,5 +1,5 @@
-import test from "ava";
-import { serializeState } from "../../src/serialziers";
+const test = require("ava");
+const { serializeState } = require("../../src/serialziers");
 
 const devicemotion = {
   acceleration: { x: 1, y: 2, z: 3 },
@@ -85,3 +85,7 @@ test("test StateSerializer", t => {
     }
   );
 });
+
+module.exports={
+  battery
+}
