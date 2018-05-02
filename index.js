@@ -1,2 +1,933 @@
-!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?t(exports):"function"==typeof define&&define.amd?define(["exports"],t):t(e.allsensors={})}(this,function(e){"use strict";var t=function(e){var t=typeof e;return null!=e&&("object"==t||"function"==t)},i="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n="object"==typeof i&&i&&i.Object===Object&&i,r="object"==typeof self&&self&&self.Object===Object&&self,o=n||r||Function("return this")(),a=function(){return o.Date.now()},s=o.Symbol,c=Object.prototype,u=c.hasOwnProperty,l=c.toString,d=s?s.toStringTag:void 0;var g=function(e){var t=u.call(e,d),i=e[d];try{e[d]=void 0;var n=!0}catch(e){}var r=l.call(e);return n&&(t?e[d]=i:delete e[d]),r},f=Object.prototype.toString;var v=function(e){return f.call(e)},p="[object Null]",h="[object Undefined]",y=s?s.toStringTag:void 0;var m=function(e){return null==e?void 0===e?h:p:y&&y in Object(e)?g(e):v(e)};var b=function(e){return null!=e&&"object"==typeof e},w="[object Symbol]";var x=function(e){return"symbol"==typeof e||b(e)&&m(e)==w},L=NaN,j=/^\s+|\s+$/g,P=/^[-+]0x[0-9a-f]+$/i,T=/^0b[01]+$/i,S=/^0o[0-7]+$/i,q=parseInt;var E=function(e){if("number"==typeof e)return e;if(x(e))return L;if(t(e)){var i="function"==typeof e.valueOf?e.valueOf():e;e=t(i)?i+"":i}if("string"!=typeof e)return 0===e?e:+e;e=e.replace(j,"");var n=T.test(e);return n||S.test(e)?q(e.slice(2),n?2:8):P.test(e)?L:+e},O="Expected a function",z=Math.max,M=Math.min;var N=function(e,i,n){var r,o,s,c,u,l,d=0,g=!1,f=!1,v=!0;if("function"!=typeof e)throw new TypeError(O);function p(t){var i=r,n=o;return r=o=void 0,d=t,c=e.apply(n,i)}function h(e){var t=e-l;return void 0===l||t>=i||t<0||f&&e-d>=s}function y(){var e=a();if(h(e))return m(e);u=setTimeout(y,function(e){var t=i-(e-l);return f?M(t,s-(e-d)):t}(e))}function m(e){return u=void 0,v&&r?p(e):(r=o=void 0,c)}function b(){var e=a(),t=h(e);if(r=arguments,o=this,l=e,t){if(void 0===u)return function(e){return d=e,u=setTimeout(y,i),g?p(e):c}(l);if(f)return u=setTimeout(y,i),p(l)}return void 0===u&&(u=setTimeout(y,i)),c}return i=E(i)||0,t(n)&&(g=!!n.leading,s=(f="maxWait"in n)?z(E(n.maxWait)||0,i):s,v="trailing"in n?!!n.trailing:v),b.cancel=function(){void 0!==u&&clearTimeout(u),d=0,r=l=o=u=void 0},b.flush=function(){return void 0===u?c:m(a())},b},A="Expected a function";var k=function(e,i,n){var r=!0,o=!0;if("function"!=typeof e)throw new TypeError(A);return t(n)&&(r="leading"in n?!!n.leading:r,o="trailing"in n?!!n.trailing:o),N(e,i,{leading:r,maxWait:i,trailing:o})};class C{constructor({queryPeriod:e,state:t}={state:{}}){return this.state=t,void 0!==e&&null!==e||(e=0),this.throttlify=0===e?e=>e:k.bind(this,void 0,this.queryPeriod),this.beginListening(),this}beginListening(){}}class I extends C{constructor(){super()}beginListening(){const e={state:this.state,queryPeriod:this.queryPeriod};new $(e),new B(e),new D(e),new G(e),new W(e),new R(e),new V(e),new _(e)}}class $ extends C{constructor(e){super(e)}beginListening(){navigator.getBattery&&navigator.getBattery().then(e=>{this.state.battery=e,e.addEventListener("chargingchange",()=>{this.state.battery=e})})}}class B extends C{constructor(e){super(e)}beginListening(){navigator.geolocation&&navigator.geolocation.watchPosition(e=>{this.state.geo=e},()=>void 0,{enableHighAccuracy:!0,timeout:this.queryPeriod,maximumAge:0})}}class D extends C{constructor(e){super(e)}beginListening(){window.addEventListener("deviceorientation",this.throttlify(e=>{this.state.deviceorientation=e}),!1)}}class G extends C{constructor(e){super(e)}beginListening(){window.addEventListener("devicemotion",this.throttlify(e=>{this.state.devicemotion=e}),!1)}}class W extends C{constructor(e){super(e)}beginListening(){window.addEventListener("devicelight",this.throttlify(e=>{this.state.devicelight=e}),!1)}}class R extends C{constructor(e){super(e)}beginListening(){window.addEventListener("deviceproximity",this.throttlify(e=>{this.state.deviceproximity=e}),!1)}}class V extends C{constructor(e){super(e)}beginListening(){if("AmbientLightSensor"in window){const e=new window.AmbientLightSensor;e.onreading=(()=>{this.state.lightlevel=e}),e.onerror=(e=>{console.error("No light sensor",e.error.name,e.error.message)}),e.start()}}}class _ extends C{constructor(e){super(e)}beginListening(){setTimeout(()=>{this.state.navigator=navigator},this.queryPeriod)}}function F(e){const t={};return e.battery&&(t.battery=J(e.battery)),e.geo&&(t.geo=K(e.geo)),e.deviceorientation&&(t.deviceorientation=Q(e.deviceorientation)),e.devicemotion&&(t.devicemotion=H(e.devicemotion)),e.navigator&&(t.navigator=U(e.navigator)),t}function H({acceleration:e,accelerationIncludingGravity:t,interval:i,rotationRate:n,timeStamp:r}){return{acceleration:{x:e.x,y:e.y,z:e.z},accelerationIncludingGravity:{x:t.x,y:t.y,z:t.z},interval:i,rotationRate:{alpha:n.alpha,beta:n.beta,gamma:n.gamma},timeStamp:r}}function U({appCodeName:e,appVersion:t,deviceMemory:i,hardwareConcurrency:n,appName:r,languages:o,language:a,platform:s,product:c,userAgent:u,vendor:l,connection:d}){return{appCodeName:e,appVersion:t,deviceMemory:i,hardwareConcurrency:n,appName:r,languages:o,language:a,platform:s,product:c,userAgent:u,vendor:l,connection:d?{downlink:d.downlink,downlinkMax:d.downlinkMax,effectiveType:d.effectiveType,type:d.type}:null}}function J({charging:e,chargingTime:t,dischargingTime:i,level:n}){return{charging:e,chargingTime:t,dischargingTime:i,level:n}}function K({coords:e}){const{latitude:t,longitude:i,altitude:n,accuracy:r,speed:o,altitudeAccuracy:a,heading:s}=e;return{coords:{latitude:t,longitude:i,altitude:n,accuracy:r,speed:o,altitudeAccuracy:a,heading:s}}}function Q({alpha:e,beta:t,gamma:i,absolute:n,bubbles:r,timeStamp:o}){return{alpha:e,beta:t,gamma:i,absolute:n,bubbles:r,timeStamp:o}}class X{constructor({queryPeriod:e}={},t,i){this.listeners=[],e&&(this.queryPeriod=opts.queryPeriod);const n=new t({queryPeriod:this.queryPeriod});this.serialize=i.bind(this),setInterval(()=>{const e=n.state;this.listeners.forEach(t=>t.call(null,e))},this.queryPeriod)}listen(e){this.listeners.push(e)}clearListeners(){this.listeners=[]}}e.GlobalSensor=class extends X{constructor(e){super(e,I,F)}},e.serializeState=F,e.serializeBatteryManager=J,e.serializePosition=K,e.serializeDeviceOrientationEvent=Q,e.serializeDeviceMotionEvent=H,e.serializeNavigator=U,Object.defineProperty(e,"__esModule",{value:!0})});
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (factory((global.allsensors = {})));
+}(this, (function (exports) { 'use strict';
+
+  /**
+   * Checks if `value` is the
+   * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+   * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+   *
+   * @static
+   * @memberOf _
+   * @since 0.1.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+   * @example
+   *
+   * _.isObject({});
+   * // => true
+   *
+   * _.isObject([1, 2, 3]);
+   * // => true
+   *
+   * _.isObject(_.noop);
+   * // => true
+   *
+   * _.isObject(null);
+   * // => false
+   */
+  function isObject(value) {
+    var type = typeof value;
+    return value != null && (type == 'object' || type == 'function');
+  }
+
+  var isObject_1 = isObject;
+
+  var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+  /** Detect free variable `global` from Node.js. */
+  var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+
+  var _freeGlobal = freeGlobal;
+
+  /** Detect free variable `self`. */
+  var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+  /** Used as a reference to the global object. */
+  var root = _freeGlobal || freeSelf || Function('return this')();
+
+  var _root = root;
+
+  /**
+   * Gets the timestamp of the number of milliseconds that have elapsed since
+   * the Unix epoch (1 January 1970 00:00:00 UTC).
+   *
+   * @static
+   * @memberOf _
+   * @since 2.4.0
+   * @category Date
+   * @returns {number} Returns the timestamp.
+   * @example
+   *
+   * _.defer(function(stamp) {
+   *   console.log(_.now() - stamp);
+   * }, _.now());
+   * // => Logs the number of milliseconds it took for the deferred invocation.
+   */
+  var now = function() {
+    return _root.Date.now();
+  };
+
+  var now_1 = now;
+
+  /** Built-in value references. */
+  var Symbol = _root.Symbol;
+
+  var _Symbol = Symbol;
+
+  /** Used for built-in method references. */
+  var objectProto = Object.prototype;
+
+  /** Used to check objects for own properties. */
+  var hasOwnProperty = objectProto.hasOwnProperty;
+
+  /**
+   * Used to resolve the
+   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+   * of values.
+   */
+  var nativeObjectToString = objectProto.toString;
+
+  /** Built-in value references. */
+  var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
+
+  /**
+   * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+   *
+   * @private
+   * @param {*} value The value to query.
+   * @returns {string} Returns the raw `toStringTag`.
+   */
+  function getRawTag(value) {
+    var isOwn = hasOwnProperty.call(value, symToStringTag),
+        tag = value[symToStringTag];
+
+    try {
+      value[symToStringTag] = undefined;
+      var unmasked = true;
+    } catch (e) {}
+
+    var result = nativeObjectToString.call(value);
+    if (unmasked) {
+      if (isOwn) {
+        value[symToStringTag] = tag;
+      } else {
+        delete value[symToStringTag];
+      }
+    }
+    return result;
+  }
+
+  var _getRawTag = getRawTag;
+
+  /** Used for built-in method references. */
+  var objectProto$1 = Object.prototype;
+
+  /**
+   * Used to resolve the
+   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+   * of values.
+   */
+  var nativeObjectToString$1 = objectProto$1.toString;
+
+  /**
+   * Converts `value` to a string using `Object.prototype.toString`.
+   *
+   * @private
+   * @param {*} value The value to convert.
+   * @returns {string} Returns the converted string.
+   */
+  function objectToString(value) {
+    return nativeObjectToString$1.call(value);
+  }
+
+  var _objectToString = objectToString;
+
+  /** `Object#toString` result references. */
+  var nullTag = '[object Null]',
+      undefinedTag = '[object Undefined]';
+
+  /** Built-in value references. */
+  var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
+
+  /**
+   * The base implementation of `getTag` without fallbacks for buggy environments.
+   *
+   * @private
+   * @param {*} value The value to query.
+   * @returns {string} Returns the `toStringTag`.
+   */
+  function baseGetTag(value) {
+    if (value == null) {
+      return value === undefined ? undefinedTag : nullTag;
+    }
+    return (symToStringTag$1 && symToStringTag$1 in Object(value))
+      ? _getRawTag(value)
+      : _objectToString(value);
+  }
+
+  var _baseGetTag = baseGetTag;
+
+  /**
+   * Checks if `value` is object-like. A value is object-like if it's not `null`
+   * and has a `typeof` result of "object".
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+   * @example
+   *
+   * _.isObjectLike({});
+   * // => true
+   *
+   * _.isObjectLike([1, 2, 3]);
+   * // => true
+   *
+   * _.isObjectLike(_.noop);
+   * // => false
+   *
+   * _.isObjectLike(null);
+   * // => false
+   */
+  function isObjectLike(value) {
+    return value != null && typeof value == 'object';
+  }
+
+  var isObjectLike_1 = isObjectLike;
+
+  /** `Object#toString` result references. */
+  var symbolTag = '[object Symbol]';
+
+  /**
+   * Checks if `value` is classified as a `Symbol` primitive or object.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+   * @example
+   *
+   * _.isSymbol(Symbol.iterator);
+   * // => true
+   *
+   * _.isSymbol('abc');
+   * // => false
+   */
+  function isSymbol(value) {
+    return typeof value == 'symbol' ||
+      (isObjectLike_1(value) && _baseGetTag(value) == symbolTag);
+  }
+
+  var isSymbol_1 = isSymbol;
+
+  /** Used as references for various `Number` constants. */
+  var NAN = 0 / 0;
+
+  /** Used to match leading and trailing whitespace. */
+  var reTrim = /^\s+|\s+$/g;
+
+  /** Used to detect bad signed hexadecimal string values. */
+  var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+  /** Used to detect binary string values. */
+  var reIsBinary = /^0b[01]+$/i;
+
+  /** Used to detect octal string values. */
+  var reIsOctal = /^0o[0-7]+$/i;
+
+  /** Built-in method references without a dependency on `root`. */
+  var freeParseInt = parseInt;
+
+  /**
+   * Converts `value` to a number.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to process.
+   * @returns {number} Returns the number.
+   * @example
+   *
+   * _.toNumber(3.2);
+   * // => 3.2
+   *
+   * _.toNumber(Number.MIN_VALUE);
+   * // => 5e-324
+   *
+   * _.toNumber(Infinity);
+   * // => Infinity
+   *
+   * _.toNumber('3.2');
+   * // => 3.2
+   */
+  function toNumber(value) {
+    if (typeof value == 'number') {
+      return value;
+    }
+    if (isSymbol_1(value)) {
+      return NAN;
+    }
+    if (isObject_1(value)) {
+      var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+      value = isObject_1(other) ? (other + '') : other;
+    }
+    if (typeof value != 'string') {
+      return value === 0 ? value : +value;
+    }
+    value = value.replace(reTrim, '');
+    var isBinary = reIsBinary.test(value);
+    return (isBinary || reIsOctal.test(value))
+      ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+      : (reIsBadHex.test(value) ? NAN : +value);
+  }
+
+  var toNumber_1 = toNumber;
+
+  /** Error message constants. */
+  var FUNC_ERROR_TEXT = 'Expected a function';
+
+  /* Built-in method references for those with the same name as other `lodash` methods. */
+  var nativeMax = Math.max,
+      nativeMin = Math.min;
+
+  /**
+   * Creates a debounced function that delays invoking `func` until after `wait`
+   * milliseconds have elapsed since the last time the debounced function was
+   * invoked. The debounced function comes with a `cancel` method to cancel
+   * delayed `func` invocations and a `flush` method to immediately invoke them.
+   * Provide `options` to indicate whether `func` should be invoked on the
+   * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+   * with the last arguments provided to the debounced function. Subsequent
+   * calls to the debounced function return the result of the last `func`
+   * invocation.
+   *
+   * **Note:** If `leading` and `trailing` options are `true`, `func` is
+   * invoked on the trailing edge of the timeout only if the debounced function
+   * is invoked more than once during the `wait` timeout.
+   *
+   * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+   * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+   *
+   * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+   * for details over the differences between `_.debounce` and `_.throttle`.
+   *
+   * @static
+   * @memberOf _
+   * @since 0.1.0
+   * @category Function
+   * @param {Function} func The function to debounce.
+   * @param {number} [wait=0] The number of milliseconds to delay.
+   * @param {Object} [options={}] The options object.
+   * @param {boolean} [options.leading=false]
+   *  Specify invoking on the leading edge of the timeout.
+   * @param {number} [options.maxWait]
+   *  The maximum time `func` is allowed to be delayed before it's invoked.
+   * @param {boolean} [options.trailing=true]
+   *  Specify invoking on the trailing edge of the timeout.
+   * @returns {Function} Returns the new debounced function.
+   * @example
+   *
+   * // Avoid costly calculations while the window size is in flux.
+   * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+   *
+   * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+   * jQuery(element).on('click', _.debounce(sendMail, 300, {
+   *   'leading': true,
+   *   'trailing': false
+   * }));
+   *
+   * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+   * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+   * var source = new EventSource('/stream');
+   * jQuery(source).on('message', debounced);
+   *
+   * // Cancel the trailing debounced invocation.
+   * jQuery(window).on('popstate', debounced.cancel);
+   */
+  function debounce(func, wait, options) {
+    var lastArgs,
+        lastThis,
+        maxWait,
+        result,
+        timerId,
+        lastCallTime,
+        lastInvokeTime = 0,
+        leading = false,
+        maxing = false,
+        trailing = true;
+
+    if (typeof func != 'function') {
+      throw new TypeError(FUNC_ERROR_TEXT);
+    }
+    wait = toNumber_1(wait) || 0;
+    if (isObject_1(options)) {
+      leading = !!options.leading;
+      maxing = 'maxWait' in options;
+      maxWait = maxing ? nativeMax(toNumber_1(options.maxWait) || 0, wait) : maxWait;
+      trailing = 'trailing' in options ? !!options.trailing : trailing;
+    }
+
+    function invokeFunc(time) {
+      var args = lastArgs,
+          thisArg = lastThis;
+
+      lastArgs = lastThis = undefined;
+      lastInvokeTime = time;
+      result = func.apply(thisArg, args);
+      return result;
+    }
+
+    function leadingEdge(time) {
+      // Reset any `maxWait` timer.
+      lastInvokeTime = time;
+      // Start the timer for the trailing edge.
+      timerId = setTimeout(timerExpired, wait);
+      // Invoke the leading edge.
+      return leading ? invokeFunc(time) : result;
+    }
+
+    function remainingWait(time) {
+      var timeSinceLastCall = time - lastCallTime,
+          timeSinceLastInvoke = time - lastInvokeTime,
+          timeWaiting = wait - timeSinceLastCall;
+
+      return maxing
+        ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke)
+        : timeWaiting;
+    }
+
+    function shouldInvoke(time) {
+      var timeSinceLastCall = time - lastCallTime,
+          timeSinceLastInvoke = time - lastInvokeTime;
+
+      // Either this is the first call, activity has stopped and we're at the
+      // trailing edge, the system time has gone backwards and we're treating
+      // it as the trailing edge, or we've hit the `maxWait` limit.
+      return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+        (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+    }
+
+    function timerExpired() {
+      var time = now_1();
+      if (shouldInvoke(time)) {
+        return trailingEdge(time);
+      }
+      // Restart the timer.
+      timerId = setTimeout(timerExpired, remainingWait(time));
+    }
+
+    function trailingEdge(time) {
+      timerId = undefined;
+
+      // Only invoke if we have `lastArgs` which means `func` has been
+      // debounced at least once.
+      if (trailing && lastArgs) {
+        return invokeFunc(time);
+      }
+      lastArgs = lastThis = undefined;
+      return result;
+    }
+
+    function cancel() {
+      if (timerId !== undefined) {
+        clearTimeout(timerId);
+      }
+      lastInvokeTime = 0;
+      lastArgs = lastCallTime = lastThis = timerId = undefined;
+    }
+
+    function flush() {
+      return timerId === undefined ? result : trailingEdge(now_1());
+    }
+
+    function debounced() {
+      var time = now_1(),
+          isInvoking = shouldInvoke(time);
+
+      lastArgs = arguments;
+      lastThis = this;
+      lastCallTime = time;
+
+      if (isInvoking) {
+        if (timerId === undefined) {
+          return leadingEdge(lastCallTime);
+        }
+        if (maxing) {
+          // Handle invocations in a tight loop.
+          timerId = setTimeout(timerExpired, wait);
+          return invokeFunc(lastCallTime);
+        }
+      }
+      if (timerId === undefined) {
+        timerId = setTimeout(timerExpired, wait);
+      }
+      return result;
+    }
+    debounced.cancel = cancel;
+    debounced.flush = flush;
+    return debounced;
+  }
+
+  var debounce_1 = debounce;
+
+  /** Error message constants. */
+  var FUNC_ERROR_TEXT$1 = 'Expected a function';
+
+  /**
+   * Creates a throttled function that only invokes `func` at most once per
+   * every `wait` milliseconds. The throttled function comes with a `cancel`
+   * method to cancel delayed `func` invocations and a `flush` method to
+   * immediately invoke them. Provide `options` to indicate whether `func`
+   * should be invoked on the leading and/or trailing edge of the `wait`
+   * timeout. The `func` is invoked with the last arguments provided to the
+   * throttled function. Subsequent calls to the throttled function return the
+   * result of the last `func` invocation.
+   *
+   * **Note:** If `leading` and `trailing` options are `true`, `func` is
+   * invoked on the trailing edge of the timeout only if the throttled function
+   * is invoked more than once during the `wait` timeout.
+   *
+   * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+   * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+   *
+   * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+   * for details over the differences between `_.throttle` and `_.debounce`.
+   *
+   * @static
+   * @memberOf _
+   * @since 0.1.0
+   * @category Function
+   * @param {Function} func The function to throttle.
+   * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
+   * @param {Object} [options={}] The options object.
+   * @param {boolean} [options.leading=true]
+   *  Specify invoking on the leading edge of the timeout.
+   * @param {boolean} [options.trailing=true]
+   *  Specify invoking on the trailing edge of the timeout.
+   * @returns {Function} Returns the new throttled function.
+   * @example
+   *
+   * // Avoid excessively updating the position while scrolling.
+   * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
+   *
+   * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
+   * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
+   * jQuery(element).on('click', throttled);
+   *
+   * // Cancel the trailing throttled invocation.
+   * jQuery(window).on('popstate', throttled.cancel);
+   */
+  function throttle(func, wait, options) {
+    var leading = true,
+        trailing = true;
+
+    if (typeof func != 'function') {
+      throw new TypeError(FUNC_ERROR_TEXT$1);
+    }
+    if (isObject_1(options)) {
+      leading = 'leading' in options ? !!options.leading : leading;
+      trailing = 'trailing' in options ? !!options.trailing : trailing;
+    }
+    return debounce_1(func, wait, {
+      'leading': leading,
+      'maxWait': wait,
+      'trailing': trailing
+    });
+  }
+
+  var throttle_1 = throttle;
+
+  class SensorMonitor {
+
+    constructor(opts){
+      if(!opts){
+        opts = {};
+      }
+
+      let {queryPeriod, state} = opts;
+
+      if (queryPeriod === undefined || queryPeriod === null) {
+        queryPeriod = 0;
+      }
+      this.queryPeriod = queryPeriod;
+
+      if (state === undefined || state === null) {
+        state = {};
+      }
+      this.state = state;
+
+      let noThrottlingFn = x => x;
+      this.throttlify = queryPeriod === 0 ? noThrottlingFn :
+        throttle_1.bind(this, undefined, this.queryPeriod);
+
+      return this;
+    }
+
+    startListening(){
+    }
+  }
+
+  class GlobalSensorMonitor extends SensorMonitor{
+
+    constructor(){
+      super();
+    }
+
+    startListening(){
+      const args = {state: this.state, queryPeriod: this.queryPeriod};
+      this.state.battery = {};
+      new BatteryMonitor({state: this.state.battery, queryPeriod: this.queryPeriod}).startListening();
+      new GeolocationMonitor(args).startListening();
+      new DeviceOrientationMonitor(args).startListening();
+      new DeviceMotionMonitor(args).startListening();
+      new DeviceLightMonitor(args).startListening();
+      new DeviceProximityMonitor(args).startListening();
+      new DeviceAmbientLightMonitor(args).startListening();
+      new DeviceNavigatorMonitor(args).startListening();
+      return this
+    }
+  }
+
+  class BatteryMonitor extends SensorMonitor{
+    
+    constructor(args){
+      super(args);
+    }
+
+    startListening () {
+      if (navigator.getBattery) {
+        navigator.getBattery().then(battery => {
+          this.state = battery;
+          battery.addEventListener("chargingchange", () => {
+            this.state = battery;
+          });
+        });
+      }
+      return this
+    }
+  }
+
+  class GeolocationMonitor extends SensorMonitor{
+    constructor(args){
+      super(args);
+    }
+
+    startListening() {
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(
+          geo => {
+            this.state.geo = geo;
+          },
+          () => undefined,
+          {
+            enableHighAccuracy: true,
+            timeout: this.queryPeriod,
+            maximumAge: 0
+          }
+        );
+      }
+      return this
+    }
+  }
+
+  class DeviceOrientationMonitor extends SensorMonitor{
+    constructor(args) {
+      super(args);
+    }
+
+    startListening() {
+      window.addEventListener(
+        "deviceorientation",
+        this.throttlify(deviceorientation => {
+          this.state.deviceorientation = deviceorientation;
+        }),
+        false
+      );
+    }
+  }
+
+  class DeviceMotionMonitor extends SensorMonitor{
+    constructor(args) {
+      super(args);
+    }
+
+
+    startListening() {
+      window.addEventListener(
+        "devicemotion",
+        this.throttlify(devicemotion => {
+          this.state.devicemotion = devicemotion;
+        }),
+        false
+      );
+      return this
+    }
+  }
+
+  class DeviceLightMonitor extends SensorMonitor{
+    constructor(args) {
+      super(args);
+    }
+
+
+    startListening() {
+      window.addEventListener(
+        "devicelight",
+        this.throttlify(devicelight => {
+          this.state.devicelight = devicelight;
+        }),
+        false
+      );
+      return this
+    }
+  }
+
+  class DeviceProximityMonitor extends SensorMonitor{
+    constructor(args) {
+      super(args);
+    }
+
+    startListening() {
+      window.addEventListener(
+        "deviceproximity",
+        this.throttlify(deviceproximity => {
+          this.state.deviceproximity = deviceproximity;
+        }),
+        false
+      );
+      return this
+    }
+  }
+
+  class DeviceAmbientLightMonitor extends SensorMonitor{
+    constructor(args) {
+      super(args);
+    }
+
+    startListening() {
+      if ("AmbientLightSensor" in window) {
+        const sensor = new window.AmbientLightSensor();
+        sensor.onreading = () => {
+          this.state.lightlevel = sensor;
+        };
+        sensor.onerror = event => {
+          console.error("No light sensor", event.error.name, event.error.message);
+        };
+        sensor.start();
+      }
+      return this
+    }
+  }
+
+  class DeviceNavigatorMonitor extends SensorMonitor {
+    constructor(args) {
+      super(args);
+    }
+
+    startListening() {
+      setTimeout(() => {
+        this.state.navigator = navigator;
+      }, this.queryPeriod);
+      return this
+    }
+  }
+
+  function serializeState(state) {
+    const serialized = {};
+
+    if (state.battery) {
+      serialized.battery = serializeBatteryManager(state.battery);
+    }
+
+    if (state.geo) {
+      serialized.geo = serializePosition(state.geo);
+    }
+
+    if (state.deviceorientation) {
+      serialized.deviceorientation = serializeDeviceOrientationEvent(
+        state.deviceorientation
+      );
+    }
+
+    if (state.devicemotion) {
+      serialized.devicemotion = serializeDeviceMotionEvent(state.devicemotion);
+    }
+
+    if (state.navigator) {
+      serialized.navigator = serializeNavigator(state.navigator);
+    }
+
+    return serialized;
+  }
+
+  function serializeDeviceMotionEvent({
+    acceleration,
+    accelerationIncludingGravity,
+    interval,
+    rotationRate,
+    timeStamp
+  }) {
+    return {
+      acceleration: {
+        x: acceleration.x,
+        y: acceleration.y,
+        z: acceleration.z
+      },
+      accelerationIncludingGravity: {
+        x: accelerationIncludingGravity.x,
+        y: accelerationIncludingGravity.y,
+        z: accelerationIncludingGravity.z
+      },
+      interval,
+      rotationRate: {
+        alpha: rotationRate.alpha,
+        beta: rotationRate.beta,
+        gamma: rotationRate.gamma
+      },
+      timeStamp
+    };
+  }
+
+  function serializeNavigator({
+    appCodeName,
+    appVersion,
+    deviceMemory,
+    hardwareConcurrency,
+    appName,
+    languages,
+    language,
+    platform,
+    product,
+    userAgent,
+    vendor,
+    connection
+  }) {
+    return {
+      appCodeName,
+      appVersion,
+      deviceMemory,
+      hardwareConcurrency,
+      appName,
+      languages,
+      language,
+      platform,
+      product,
+      userAgent,
+      vendor,
+      connection: connection
+        ? {
+            downlink: connection.downlink,
+            downlinkMax: connection.downlinkMax,
+            effectiveType: connection.effectiveType,
+            type: connection.type
+          }
+        : null
+    };
+  }
+
+  function serializeBatteryManager({
+    charging,
+    chargingTime,
+    dischargingTime,
+    level
+  }) {
+    return { charging, chargingTime, dischargingTime, level };
+  }
+
+  function serializePosition({ coords }) {
+    const {
+      latitude,
+      longitude,
+      altitude,
+      accuracy,
+      speed,
+      altitudeAccuracy,
+      heading
+    } = coords;
+    return {
+      coords: {
+        latitude,
+        longitude,
+        altitude,
+        accuracy,
+        speed,
+        altitudeAccuracy,
+        heading
+      }
+    };
+  }
+
+  function serializeDeviceOrientationEvent({
+    alpha,
+    beta,
+    gamma,
+    absolute,
+    bubbles,
+    timeStamp
+  }) {
+    return { alpha, beta, gamma, absolute, bubbles, timeStamp };
+  }
+
+  class Sensor {
+    constructor (opts, monitorClass, serializeFn) {
+
+      if (opts && opts.queryPeriod) {
+        this.queryPeriod = opts.queryPeriod;
+      } else {
+        this.queryPeriod = 0;
+      }
+
+      const monitor = new monitorClass({queryPeriod: this.queryPeriod}).startListening();
+
+      this.serialize = serializeFn.bind(this);
+
+      this.listeners = [];
+      setInterval(() => {
+        const state = monitor.state;
+        this.listeners.forEach(listener => listener.call(null, state));
+      }, this.queryPeriod);
+    }
+
+    listen (newListener) {
+      this.listeners.push(newListener);
+    }
+
+    clearListeners () {
+      this.listeners = [];
+    }
+  }
+
+  class GlobalSensor extends Sensor {
+    constructor (opts) {
+      super(opts, GlobalSensorMonitor, serializeState);
+    }
+  }
+
+  class BatteryMonitorSensor extends Sensor {
+    constructor (opts) {
+      super(opts, BatteryMonitor, serializeBatteryManager);
+    }
+  }
+
+  exports.GlobalSensor = GlobalSensor;
+  exports.BatteryMonitorSensor = BatteryMonitorSensor;
+  exports.serializeState = serializeState;
+  exports.serializeBatteryManager = serializeBatteryManager;
+  exports.serializePosition = serializePosition;
+  exports.serializeDeviceOrientationEvent = serializeDeviceOrientationEvent;
+  exports.serializeDeviceMotionEvent = serializeDeviceMotionEvent;
+  exports.serializeNavigator = serializeNavigator;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
 //# sourceMappingURL=index.js.map

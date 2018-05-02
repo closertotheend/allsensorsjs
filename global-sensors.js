@@ -1,42 +1,51 @@
-import GlobalSensorMonitor from "./monitors";
+import { BatteryMonitor, GlobalSensorMonitor } from './monitors'
 import {
-  serializeState,
   serializeBatteryManager,
-  serializePosition,
-  serializeDeviceOrientationEvent,
   serializeDeviceMotionEvent,
-  serializeNavigator
-} from "./serialziers";
+  serializeDeviceOrientationEvent,
+  serializeNavigator,
+  serializePosition,
+  serializeState
+} from './test/serialziers'
 
-class Sensor{
-  constructor({queryPeriod} = {}, monitorClass, serializeFn) {
-    this.listeners = [];
-    if (queryPeriod) {
-      this.queryPeriod = opts.queryPeriod;
+class Sensor {
+  constructor (opts, monitorClass, serializeFn) {
+
+    if (opts && opts.queryPeriod) {
+      this.queryPeriod = opts.queryPeriod
+    } else {
+      this.queryPeriod = 0
     }
 
-    const monitor = new monitorClass({queryPeriod: this.queryPeriod})
+    const monitor = new monitorClass({queryPeriod: this.queryPeriod}).startListening()
 
     this.serialize = serializeFn.bind(this)
 
+    this.listeners = []
     setInterval(() => {
-      const state = monitor.state;
-      this.listeners.forEach(listener => listener.call(null, state));
-    }, this.queryPeriod);
+      const state = monitor.state
+      this.listeners.forEach(listener => listener.call(null, state))
+    }, this.queryPeriod)
   }
 
-  listen(newListener) {
-    this.listeners.push(newListener);
+  listen (newListener) {
+    this.listeners.push(newListener)
   }
 
-  clearListeners() {
-    this.listeners = [];
+  clearListeners () {
+    this.listeners = []
   }
 }
-export class GlobalSensor extends Sensor{
-  constructor(opts) {
-  serializeState,
-    super(opts, GlobalSensorMonitor, serializeState);
+
+export class GlobalSensor extends Sensor {
+  constructor (opts) {
+    super(opts, GlobalSensorMonitor, serializeState)
+  }
+}
+
+export class BatteryMonitorSensor extends Sensor {
+  constructor (opts) {
+    super(opts, BatteryMonitor, serializeBatteryManager)
   }
 }
 

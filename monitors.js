@@ -3,63 +3,80 @@ import throttle from "lodash/throttle";
 
 class SensorMonitor {
 
-  constructor({queryPeriod, state} = { state:{}}){
-    this.state = state;
+  constructor(opts){
+    if(!opts){
+      opts = {}
+    }
+
+    let {queryPeriod, state} = opts;
+
     if (queryPeriod === undefined || queryPeriod === null) {
       queryPeriod = 0;
     }
-    this.throttlify = queryPeriod === 0 ? x => x : throttle.bind(this, undefined, this.queryPeriod);
-    this.beginListening();
+    this.queryPeriod = queryPeriod;
+
+    if (state === undefined || state === null) {
+      state = {};
+    }
+    this.state = state;
+
+    let noThrottlingFn = x => x
+    this.throttlify = queryPeriod === 0 ? noThrottlingFn :
+      throttle.bind(this, undefined, this.queryPeriod);
+
     return this;
   }
 
-  beginListening(){
+  startListening(){
   }
 }
 
-export default class GlobalSensorMonitor extends SensorMonitor{
+export class GlobalSensorMonitor extends SensorMonitor{
 
   constructor(){
     super();
   }
 
-  beginListening(){
+  startListening(){
     const args = {state: this.state, queryPeriod: this.queryPeriod};
-    new BatteryMonitor(args);
-    new GeolocationMonitor(args);
-    new DeviceOrientationMonitor(args);
-    new DeviceMotionMonitor(args);
-    new DeviceLightMonitor(args);
-    new DeviceProximityMonitor(args);
-    new DeviceAmbientLightMonitor(args);
-    new DeviceNavigatorMonitor(args);
+    this.state.battery = {};
+    new BatteryMonitor({state: this.state.battery, queryPeriod: this.queryPeriod}).startListening();
+    new GeolocationMonitor(args).startListening();
+    new DeviceOrientationMonitor(args).startListening();
+    new DeviceMotionMonitor(args).startListening();
+    new DeviceLightMonitor(args).startListening();
+    new DeviceProximityMonitor(args).startListening();
+    new DeviceAmbientLightMonitor(args).startListening();
+    new DeviceNavigatorMonitor(args).startListening();
+    return this
   }
 }
 
-class BatteryMonitor extends SensorMonitor{
+export class BatteryMonitor extends SensorMonitor{
   
   constructor(args){
     super(args);
   }
 
-  beginListening () {
+  startListening () {
     if (navigator.getBattery) {
       navigator.getBattery().then(battery => {
-        this.state.battery = battery;
+        this.state = battery;
         battery.addEventListener("chargingchange", () => {
-          this.state.battery = battery;
+          this.state = battery;
         });
       });
     }
+    return this
   }
 }
 
-class GeolocationMonitor extends SensorMonitor{
+export class GeolocationMonitor extends SensorMonitor{
   constructor(args){
     super(args);
   }
 
-  beginListening() {
+  startListening() {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(
         geo => {
@@ -73,15 +90,16 @@ class GeolocationMonitor extends SensorMonitor{
         }
       );
     }
+    return this
   }
 }
 
-class DeviceOrientationMonitor extends SensorMonitor{
+export class DeviceOrientationMonitor extends SensorMonitor{
   constructor(args) {
     super(args);
   }
 
-  beginListening() {
+  startListening() {
     window.addEventListener(
       "deviceorientation",
       this.throttlify(deviceorientation => {
@@ -92,13 +110,13 @@ class DeviceOrientationMonitor extends SensorMonitor{
   }
 }
 
-class DeviceMotionMonitor extends SensorMonitor{
+export class DeviceMotionMonitor extends SensorMonitor{
   constructor(args) {
     super(args);
   }
 
 
-  beginListening() {
+  startListening() {
     window.addEventListener(
       "devicemotion",
       this.throttlify(devicemotion => {
@@ -106,16 +124,17 @@ class DeviceMotionMonitor extends SensorMonitor{
       }),
       false
     );
+    return this
   }
 }
 
-class DeviceLightMonitor extends SensorMonitor{
+export class DeviceLightMonitor extends SensorMonitor{
   constructor(args) {
     super(args);
   }
 
 
-  beginListening() {
+  startListening() {
     window.addEventListener(
       "devicelight",
       this.throttlify(devicelight => {
@@ -123,15 +142,16 @@ class DeviceLightMonitor extends SensorMonitor{
       }),
       false
     );
+    return this
   }
 }
 
-class DeviceProximityMonitor extends SensorMonitor{
+export class DeviceProximityMonitor extends SensorMonitor{
   constructor(args) {
     super(args);
   }
 
-  beginListening() {
+  startListening() {
     window.addEventListener(
       "deviceproximity",
       this.throttlify(deviceproximity => {
@@ -139,15 +159,16 @@ class DeviceProximityMonitor extends SensorMonitor{
       }),
       false
     );
+    return this
   }
 }
 
-class DeviceAmbientLightMonitor extends SensorMonitor{
+export class DeviceAmbientLightMonitor extends SensorMonitor{
   constructor(args) {
     super(args);
   }
 
-  beginListening() {
+  startListening() {
     if ("AmbientLightSensor" in window) {
       const sensor = new window.AmbientLightSensor();
       sensor.onreading = () => {
@@ -158,17 +179,19 @@ class DeviceAmbientLightMonitor extends SensorMonitor{
       };
       sensor.start();
     }
+    return this
   }
 }
 
-class DeviceNavigatorMonitor extends SensorMonitor {
+export class DeviceNavigatorMonitor extends SensorMonitor {
   constructor(args) {
     super(args);
   }
 
-  beginListening() {
+  startListening() {
     setTimeout(() => {
       this.state.navigator = navigator;
     }, this.queryPeriod);
+    return this
   }
 }

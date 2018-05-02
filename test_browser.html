@@ -9,9 +9,9 @@
 <div id="content">Loading content of the document..... </div>
 <script src="index.js"></script>
 <script>
-        var gs = new allsensors.GlobalSensor()
-        gs.listen((state)=>{
-            var serialized = gs.serialize(state);
+        var sensor = new allsensors.GlobalSensor({queryPeriod: 1000})
+        sensor.listen((state)=>{
+            var serialized = sensor.serialize(state);
             document.getElementById("content").innerHTML = JSON.stringify(serialized)
         })
     </script>

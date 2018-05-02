@@ -14,7 +14,7 @@ export default {
     plugins: [
         resolve(),
         commonjs(),
-        babel(),
-        uglify()
+        // babel(),
+        // uglify()
     ]
 };
