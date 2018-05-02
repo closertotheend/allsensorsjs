@@ -6,7 +6,7 @@ import babel from 'rollup-plugin-babel';
 export default {
     input: 'src/global-sensors.js',
     output: {
-        file: 'index.js',
+        file: 'dist/index.js',
         format: 'umd',
         name: 'allsensors',
         sourcemap: true
