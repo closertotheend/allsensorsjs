@@ -1,5 +1,5 @@
 import test from "ava";
-import { serializeState } from "../serialziers";
+import { serializeState } from "../../src/serialziers";
 
 const devicemotion = {
   acceleration: { x: 1, y: 2, z: 3 },

@@ -6,7 +6,7 @@ import {
   serializeNavigator,
   serializePosition,
   serializeState
-} from './test/serialziers'
+} from './serialziers'
 
 class Sensor {
   constructor (opts, monitorClass, serializeFn) {

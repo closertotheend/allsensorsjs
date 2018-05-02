@@ -4,7 +4,7 @@ import uglify from 'rollup-plugin-uglify';
 import babel from 'rollup-plugin-babel';
 
 export default {
-    input: 'global-sensors.js',
+    input: 'src/global-sensors.js',
     output: {
         file: 'index.js',
         format: 'umd',
