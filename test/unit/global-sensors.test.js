@@ -23,10 +23,10 @@ test('test BatteryMonitorSensor', async t => {
 })
 
 test('test GlobalSensor', async t => {
-  const batteryMonitorSensor = new GlobalSensor()
+  const globalSensor = new GlobalSensor()
 
   const globalSensor = new Promise((resolve, reject) => {
-    batteryMonitorSensor.listen(data => {
+    globalSensor.listen(data => {
       resolve(data)
     })
   })
@@ -40,7 +40,7 @@ test('test GlobalSensor', async t => {
     geo: windowMocks.geo
   })
 
-  t.deepEqual(batteryMonitorSensor.serialize(globalSensorResponse), {
+  t.deepEqual(globalSensor.serialize(globalSensorResponse), {
     battery: windowMocks.battery,
     navigator: windowMocks.navigator,
     devicemotion: windowMocks.devicemotion,
