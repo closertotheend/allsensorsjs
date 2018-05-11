@@ -1,38 +1,38 @@
-function serializeState (state) {
-  const serialized = {}
+function serializeState(state) {
+  const serialized = {};
 
   if (state.battery) {
-    serialized.battery = serializeBatteryManager(state.battery)
+    serialized.battery = serializeBatteryManager(state.battery);
   }
 
   if (state.geo) {
-    serialized.geo = serializePosition(state.geo)
+    serialized.geo = serializePosition(state.geo);
   }
 
   if (state.deviceorientation) {
     serialized.deviceorientation = serializeDeviceOrientationEvent(
       state.deviceorientation
-    )
+    );
   }
 
   if (state.devicemotion) {
-    serialized.devicemotion = serializeDeviceMotionEvent(state.devicemotion)
+    serialized.devicemotion = serializeDeviceMotionEvent(state.devicemotion);
   }
 
   if (state.navigator) {
-    serialized.navigator = serializeNavigator(state.navigator)
+    serialized.navigator = serializeNavigator(state.navigator);
   }
 
-  return serialized
+  return serialized;
 }
 
-function serializeDeviceMotionEvent ({
-                                       acceleration,
-                                       accelerationIncludingGravity,
-                                       interval,
-                                       rotationRate,
-                                       timeStamp
-                                     }) {
+function serializeDeviceMotionEvent({
+  acceleration,
+  accelerationIncludingGravity,
+  interval,
+  rotationRate,
+  timeStamp
+}) {
   return {
     acceleration: {
       x: acceleration.x,
@@ -51,23 +51,23 @@ function serializeDeviceMotionEvent ({
       gamma: rotationRate.gamma
     },
     timeStamp
-  }
+  };
 }
 
-function serializeNavigator ({
-                               appCodeName,
-                               appVersion,
-                               deviceMemory,
-                               hardwareConcurrency,
-                               appName,
-                               languages,
-                               language,
-                               platform,
-                               product,
-                               userAgent,
-                               vendor,
-                               connection
-                             }) {
+function serializeNavigator({
+  appCodeName,
+  appVersion,
+  deviceMemory,
+  hardwareConcurrency,
+  appName,
+  languages,
+  language,
+  platform,
+  product,
+  userAgent,
+  vendor,
+  connection
+}) {
   return {
     appCodeName,
     appVersion,
@@ -82,25 +82,25 @@ function serializeNavigator ({
     vendor,
     connection: connection
       ? {
-        downlink: connection.downlink,
-        downlinkMax: connection.downlinkMax,
-        effectiveType: connection.effectiveType,
-        type: connection.type
-      }
+          downlink: connection.downlink,
+          downlinkMax: connection.downlinkMax,
+          effectiveType: connection.effectiveType,
+          type: connection.type
+        }
       : null
-  }
+  };
 }
 
-function serializeBatteryManager ({
-                                    charging,
-                                    chargingTime,
-                                    dischargingTime,
-                                    level
-                                  }) {
-  return {charging, chargingTime, dischargingTime, level}
+function serializeBatteryManager({
+  charging,
+  chargingTime,
+  dischargingTime,
+  level
+}) {
+  return { charging, chargingTime, dischargingTime, level };
 }
 
-function serializePosition ({coords}) {
+function serializePosition({ coords }) {
   const {
     latitude,
     longitude,
@@ -109,7 +109,7 @@ function serializePosition ({coords}) {
     speed,
     altitudeAccuracy,
     heading
-  } = coords
+  } = coords;
   return {
     coords: {
       latitude,
@@ -120,18 +120,22 @@ function serializePosition ({coords}) {
       altitudeAccuracy,
       heading
     }
-  }
+  };
 }
 
-function serializeDeviceOrientationEvent ({
-                                            alpha,
-                                            beta,
-                                            gamma,
-                                            absolute,
-                                            bubbles,
-                                            timeStamp
-                                          }) {
-  return {alpha, beta, gamma, absolute, bubbles, timeStamp}
+function serializeDeviceOrientationEvent({
+  alpha,
+  beta,
+  gamma,
+  absolute,
+  bubbles,
+  timeStamp
+}) {
+  return { alpha, beta, gamma, absolute, bubbles, timeStamp };
+}
+
+function isEmpty(obj) {
+  return Object.keys(obj).length === 0;
 }
 
 module.exports = {
@@ -141,4 +145,4 @@ module.exports = {
   serializeBatteryManager,
   serializePosition,
   serializeDeviceOrientationEvent
-}
+};

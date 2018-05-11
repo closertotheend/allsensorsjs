@@ -1,4 +1,4 @@
-const { BatteryMonitor, GlobalSensorMonitor } = require('./monitors')
+const { BatteryMonitor, GlobalSensorMonitor } = require("./monitors");
 const {
   serializeBatteryManager,
   serializeDeviceMotionEvent,
@@ -6,46 +6,47 @@ const {
   serializeNavigator,
   serializePosition,
   serializeState
-} = require('./serialziers')
+} = require("./serialziers");
 
 class Sensor {
-  constructor (opts, monitorClass, serializeFn) {
-
+  constructor(opts, monitorClass, serializeFn) {
     if (opts && opts.queryPeriod) {
-      this.queryPeriod = opts.queryPeriod
+      this.queryPeriod = opts.queryPeriod;
     } else {
-      this.queryPeriod = 0
+      this.queryPeriod = 0;
     }
 
-    const monitor = new monitorClass({queryPeriod: this.queryPeriod}).startListening()
+    const monitor = new monitorClass({
+      queryPeriod: this.queryPeriod
+    }).startListening();
 
-    this.serialize = serializeFn.bind(this)
+    this.serialize = serializeFn.bind(this);
 
-    this.listeners = []
+    this.listeners = [];
     setInterval(() => {
-      const state = monitor.state
-      this.listeners.forEach(listener => listener.call(null, state))
-    }, this.queryPeriod)
+      const state = monitor.state;
+      this.listeners.forEach(listener => listener.call(null, state));
+    }, this.queryPeriod);
   }
 
-  listen (newListener) {
-    this.listeners.push(newListener)
+  listen(newListener) {
+    this.listeners.push(newListener);
   }
 
-  clearListeners () {
-    this.listeners = []
+  clearListeners() {
+    this.listeners = [];
   }
 }
 
 class GlobalSensor extends Sensor {
-  constructor (opts) {
-    super(opts, GlobalSensorMonitor, serializeState)
+  constructor(opts) {
+    super(opts, GlobalSensorMonitor, serializeState);
   }
 }
 
 class BatteryMonitorSensor extends Sensor {
-  constructor (opts) {
-    super(opts, BatteryMonitor, serializeBatteryManager)
+  constructor(opts) {
+    super(opts, BatteryMonitor, serializeBatteryManager);
   }
 }
 
@@ -58,4 +59,4 @@ module.exports = {
   serializeNavigator,
   GlobalSensor,
   BatteryMonitorSensor
-}
+};

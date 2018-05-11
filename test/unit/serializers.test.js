@@ -86,6 +86,10 @@ test("test StateSerializer", t => {
   );
 });
 
-module.exports={
-  battery
-}
+module.exports = {
+  battery,
+  geo,
+  deviceorientation,
+  devicemotion,
+  navigator
+};
