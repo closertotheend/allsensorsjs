@@ -42,7 +42,15 @@ function mockWindow () {
       }
     }
   }
-  return { battery, mockedBattery, mockedNavigator }
+  return {
+    battery,
+    mockedBattery,
+    mockedNavigator,
+    geo,
+    devicemotion,
+    deviceorientation,
+    navigator
+  }
 }
 
 let { mockedBattery, mockedNavigator } = mockWindow()

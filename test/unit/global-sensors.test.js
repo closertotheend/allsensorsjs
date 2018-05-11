@@ -22,14 +22,29 @@ test('test BatteryMonitorSensor', async t => {
   t.deepEqual(batteryMonitorSensor.serialize(resp), windowMocks.battery)
 })
 
-// test('test GlobalSensor', async t => {
-//   const batteryMonitorSensor = new GlobalSensor()
-//
-//   const globalSensor = new Promise(((resolve, reject) => {
-//     batteryMonitorSensor.listen((data) => {
-//       resolve(data)
-//     })
-//   }))
-//
-//   t.deepEqual(await globalSensor, 123)
-// })
+test('test GlobalSensor', async t => {
+  const batteryMonitorSensor = new GlobalSensor()
+
+  const globalSensor = new Promise((resolve, reject) => {
+    batteryMonitorSensor.listen(data => {
+      resolve(data)
+    })
+  })
+
+  const globalSensorResponse = await globalSensor
+  t.deepEqual(globalSensorResponse, {
+    battery: windowMocks.mockedBattery,
+    navigator: windowMocks.mockedNavigator,
+    devicemotion: windowMocks.devicemotion,
+    deviceorientation: windowMocks.deviceorientation,
+    geo: windowMocks.geo
+  })
+
+  t.deepEqual(batteryMonitorSensor.serialize(globalSensorResponse), {
+    battery: windowMocks.battery,
+    navigator: windowMocks.navigator,
+    devicemotion: windowMocks.devicemotion,
+    deviceorientation: windowMocks.deviceorientation,
+    geo: windowMocks.geo
+  })
+})
