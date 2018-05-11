@@ -1,14 +1,14 @@
-import resolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
-import uglify from "rollup-plugin-uglify";
-import babel from "rollup-plugin-babel";
+import resolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
+import uglify from 'rollup-plugin-uglify'
+import babel from 'rollup-plugin-babel'
 
 export default {
-  input: "src/global-sensors.js",
+  input: 'src/global-sensors.js',
   output: {
-    file: "dist/index.js",
-    format: "umd",
-    name: "allsensors",
+    file: 'dist/index.js',
+    format: 'umd',
+    name: 'allsensors',
     sourcemap: true
   },
   plugins: [
@@ -17,4 +17,4 @@ export default {
     // babel(),
     // uglify()
   ]
-};
+}

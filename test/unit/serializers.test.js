@@ -1,5 +1,5 @@
-const test = require("ava");
-const { serializeState } = require("../../src/serialziers");
+const test = require('ava')
+const { serializeState } = require('../../src/serialziers')
 
 const devicemotion = {
   acceleration: { x: 1, y: 2, z: 3 },
@@ -15,29 +15,29 @@ const devicemotion = {
     gamma: 0
   },
   timeStamp: 8024.800000001051
-};
+}
 
 const navigator = {
-  appCodeName: "Mozilla",
-  appName: "Netscape",
+  appCodeName: 'Mozilla',
+  appName: 'Netscape',
   appVersion:
-    "5.0 (Linux; Android 7.1.2; Moto G4 Build/NJH47F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.126 Mobile Safari/537.36",
-  languages: ["en-US", "en", "ru", "et", "sk"],
-  platform: "Linux armv7l",
-  product: "Gecko",
+    '5.0 (Linux; Android 7.1.2; Moto G4 Build/NJH47F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.126 Mobile Safari/537.36',
+  languages: ['en-US', 'en', 'ru', 'et', 'sk'],
+  platform: 'Linux armv7l',
+  product: 'Gecko',
   userAgent:
-    "Mozilla/5.0 (Linux; Android 7.1.2; Moto G4 Build/NJH47F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.126 Mobile Safari/537.36",
-  vendor: "Google Inc.",
+    'Mozilla/5.0 (Linux; Android 7.1.2; Moto G4 Build/NJH47F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.126 Mobile Safari/537.36',
+  vendor: 'Google Inc.',
   deviceMemory: 2,
-  language: "en-US",
+  language: 'en-US',
   hardwareConcurrency: 8,
   connection: {
     downlink: 10,
     downlinkMax: Infinity,
-    effectiveType: "4g",
-    type: "wifi"
+    effectiveType: '4g',
+    type: 'wifi'
   }
-};
+}
 
 const geo = {
   coords: {
@@ -49,7 +49,7 @@ const geo = {
     longitude: 24.6973848,
     speed: null
   }
-};
+}
 
 const deviceorientation = {
   alpha: null,
@@ -58,16 +58,16 @@ const deviceorientation = {
   absolute: false,
   bubbles: false,
   timeStamp: 405.4000000032829
-};
+}
 
 const battery = {
   charging: true,
   chargingTime: Infinity,
   dischargingTime: Infinity,
   level: 1
-};
+}
 
-test("test StateSerializer", t => {
+test('test StateSerializer', t => {
   t.deepEqual(
     serializeState({
       battery,
@@ -83,8 +83,8 @@ test("test StateSerializer", t => {
       battery,
       navigator
     }
-  );
-});
+  )
+})
 
 module.exports = {
   battery,
@@ -92,4 +92,4 @@ module.exports = {
   deviceorientation,
   devicemotion,
   navigator
-};
+}
