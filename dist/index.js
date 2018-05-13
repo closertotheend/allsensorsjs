@@ -36,11 +36,6 @@
 
   var isObject_1 = isObject;
 
-  var isObject$1 = /*#__PURE__*/Object.freeze({
-    default: isObject_1,
-    __moduleExports: isObject_1
-  });
-
   var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   /** Detect free variable `global` from Node.js. */
@@ -48,27 +43,13 @@
 
   var _freeGlobal = freeGlobal;
 
-  var _freeGlobal$1 = /*#__PURE__*/Object.freeze({
-    default: _freeGlobal,
-    __moduleExports: _freeGlobal
-  });
-
-  var freeGlobal$1 = ( _freeGlobal$1 && _freeGlobal ) || _freeGlobal$1;
-
   /** Detect free variable `self`. */
   var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
 
   /** Used as a reference to the global object. */
-  var root = freeGlobal$1 || freeSelf || Function('return this')();
+  var root = _freeGlobal || freeSelf || Function('return this')();
 
   var _root = root;
-
-  var _root$1 = /*#__PURE__*/Object.freeze({
-    default: _root,
-    __moduleExports: _root
-  });
-
-  var root$1 = ( _root$1 && _root ) || _root$1;
 
   /**
    * Gets the timestamp of the number of milliseconds that have elapsed since
@@ -87,27 +68,15 @@
    * // => Logs the number of milliseconds it took for the deferred invocation.
    */
   var now = function() {
-    return root$1.Date.now();
+    return _root.Date.now();
   };
 
   var now_1 = now;
 
-  var now$1 = /*#__PURE__*/Object.freeze({
-    default: now_1,
-    __moduleExports: now_1
-  });
-
   /** Built-in value references. */
-  var Symbol = root$1.Symbol;
+  var Symbol = _root.Symbol;
 
   var _Symbol = Symbol;
-
-  var _Symbol$1 = /*#__PURE__*/Object.freeze({
-    default: _Symbol,
-    __moduleExports: _Symbol
-  });
-
-  var Symbol$1 = ( _Symbol$1 && _Symbol ) || _Symbol$1;
 
   /** Used for built-in method references. */
   var objectProto = Object.prototype;
@@ -123,7 +92,7 @@
   var nativeObjectToString = objectProto.toString;
 
   /** Built-in value references. */
-  var symToStringTag = Symbol$1 ? Symbol$1.toStringTag : undefined;
+  var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
 
   /**
    * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
@@ -154,11 +123,6 @@
 
   var _getRawTag = getRawTag;
 
-  var _getRawTag$1 = /*#__PURE__*/Object.freeze({
-    default: _getRawTag,
-    __moduleExports: _getRawTag
-  });
-
   /** Used for built-in method references. */
   var objectProto$1 = Object.prototype;
 
@@ -182,21 +146,12 @@
 
   var _objectToString = objectToString;
 
-  var _objectToString$1 = /*#__PURE__*/Object.freeze({
-    default: _objectToString,
-    __moduleExports: _objectToString
-  });
-
-  var getRawTag$1 = ( _getRawTag$1 && _getRawTag ) || _getRawTag$1;
-
-  var objectToString$1 = ( _objectToString$1 && _objectToString ) || _objectToString$1;
-
   /** `Object#toString` result references. */
   var nullTag = '[object Null]',
       undefinedTag = '[object Undefined]';
 
   /** Built-in value references. */
-  var symToStringTag$1 = Symbol$1 ? Symbol$1.toStringTag : undefined;
+  var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
 
   /**
    * The base implementation of `getTag` without fallbacks for buggy environments.
@@ -210,16 +165,11 @@
       return value === undefined ? undefinedTag : nullTag;
     }
     return (symToStringTag$1 && symToStringTag$1 in Object(value))
-      ? getRawTag$1(value)
-      : objectToString$1(value);
+      ? _getRawTag(value)
+      : _objectToString(value);
   }
 
   var _baseGetTag = baseGetTag;
-
-  var _baseGetTag$1 = /*#__PURE__*/Object.freeze({
-    default: _baseGetTag,
-    __moduleExports: _baseGetTag
-  });
 
   /**
    * Checks if `value` is object-like. A value is object-like if it's not `null`
@@ -251,15 +201,6 @@
 
   var isObjectLike_1 = isObjectLike;
 
-  var isObjectLike$1 = /*#__PURE__*/Object.freeze({
-    default: isObjectLike_1,
-    __moduleExports: isObjectLike_1
-  });
-
-  var baseGetTag$1 = ( _baseGetTag$1 && _baseGetTag ) || _baseGetTag$1;
-
-  var isObjectLike$2 = ( isObjectLike$1 && isObjectLike_1 ) || isObjectLike$1;
-
   /** `Object#toString` result references. */
   var symbolTag = '[object Symbol]';
 
@@ -282,19 +223,10 @@
    */
   function isSymbol(value) {
     return typeof value == 'symbol' ||
-      (isObjectLike$2(value) && baseGetTag$1(value) == symbolTag);
+      (isObjectLike_1(value) && _baseGetTag(value) == symbolTag);
   }
 
   var isSymbol_1 = isSymbol;
-
-  var isSymbol$1 = /*#__PURE__*/Object.freeze({
-    default: isSymbol_1,
-    __moduleExports: isSymbol_1
-  });
-
-  var isObject$2 = ( isObject$1 && isObject_1 ) || isObject$1;
-
-  var isSymbol$2 = ( isSymbol$1 && isSymbol_1 ) || isSymbol$1;
 
   /** Used as references for various `Number` constants. */
   var NAN = 0 / 0;
@@ -341,12 +273,12 @@
     if (typeof value == 'number') {
       return value;
     }
-    if (isSymbol$2(value)) {
+    if (isSymbol_1(value)) {
       return NAN;
     }
-    if (isObject$2(value)) {
+    if (isObject_1(value)) {
       var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-      value = isObject$2(other) ? (other + '') : other;
+      value = isObject_1(other) ? (other + '') : other;
     }
     if (typeof value != 'string') {
       return value === 0 ? value : +value;
@@ -359,15 +291,6 @@
   }
 
   var toNumber_1 = toNumber;
-
-  var toNumber$1 = /*#__PURE__*/Object.freeze({
-    default: toNumber_1,
-    __moduleExports: toNumber_1
-  });
-
-  var now$2 = ( now$1 && now_1 ) || now$1;
-
-  var toNumber$2 = ( toNumber$1 && toNumber_1 ) || toNumber$1;
 
   /** Error message constants. */
   var FUNC_ERROR_TEXT = 'Expected a function';
@@ -445,11 +368,11 @@
     if (typeof func != 'function') {
       throw new TypeError(FUNC_ERROR_TEXT);
     }
-    wait = toNumber$2(wait) || 0;
-    if (isObject$2(options)) {
+    wait = toNumber_1(wait) || 0;
+    if (isObject_1(options)) {
       leading = !!options.leading;
       maxing = 'maxWait' in options;
-      maxWait = maxing ? nativeMax(toNumber$2(options.maxWait) || 0, wait) : maxWait;
+      maxWait = maxing ? nativeMax(toNumber_1(options.maxWait) || 0, wait) : maxWait;
       trailing = 'trailing' in options ? !!options.trailing : trailing;
     }
 
@@ -494,7 +417,7 @@
     }
 
     function timerExpired() {
-      var time = now$2();
+      var time = now_1();
       if (shouldInvoke(time)) {
         return trailingEdge(time);
       }
@@ -523,11 +446,11 @@
     }
 
     function flush() {
-      return timerId === undefined ? result : trailingEdge(now$2());
+      return timerId === undefined ? result : trailingEdge(now_1());
     }
 
     function debounced() {
-      var time = now$2(),
+      var time = now_1(),
           isInvoking = shouldInvoke(time);
 
       lastArgs = arguments;
@@ -555,13 +478,6 @@
   }
 
   var debounce_1 = debounce;
-
-  var debounce$1 = /*#__PURE__*/Object.freeze({
-    default: debounce_1,
-    __moduleExports: debounce_1
-  });
-
-  var debounce$2 = ( debounce$1 && debounce_1 ) || debounce$1;
 
   /** Error message constants. */
   var FUNC_ERROR_TEXT$1 = 'Expected a function';
@@ -617,11 +533,11 @@
     if (typeof func != 'function') {
       throw new TypeError(FUNC_ERROR_TEXT$1);
     }
-    if (isObject$2(options)) {
+    if (isObject_1(options)) {
       leading = 'leading' in options ? !!options.leading : leading;
       trailing = 'trailing' in options ? !!options.trailing : trailing;
     }
-    return debounce$2(func, wait, {
+    return debounce_1(func, wait, {
       'leading': leading,
       'maxWait': wait,
       'trailing': trailing
@@ -629,13 +545,6 @@
   }
 
   var throttle_1 = throttle;
-
-  var throttle$1 = /*#__PURE__*/Object.freeze({
-    default: throttle_1,
-    __moduleExports: throttle_1
-  });
-
-  var throttle$2 = ( throttle$1 && throttle_1 ) || throttle$1;
 
   class SensorMonitor {
     constructor (opts) {
@@ -659,7 +568,7 @@
       this.throttlify =
         queryPeriod === 0
           ? noThrottlingFn
-          : throttle$2.bind(this, undefined, this.queryPeriod);
+          : throttle_1.bind(this, undefined, this.queryPeriod);
 
       return this
     }
@@ -738,10 +647,9 @@
           geo => {
             this.state.geo = geo;
           },
-          () => undefined,
+          (a1,a2) => undefined,
           {
             enableHighAccuracy: true,
-            timeout: this.queryPeriod,
             maximumAge: 0
           }
         );
@@ -861,29 +769,6 @@
     DeviceAmbientLightMonitor,
     DeviceNavigatorMonitor
   };
-  var monitors_1 = monitors.GlobalSensorMonitor;
-  var monitors_2 = monitors.BatteryMonitor;
-  var monitors_3 = monitors.GeolocationMonitor;
-  var monitors_4 = monitors.DeviceOrientationMonitor;
-  var monitors_5 = monitors.DeviceMotionMonitor;
-  var monitors_6 = monitors.DeviceLightMonitor;
-  var monitors_7 = monitors.DeviceProximityMonitor;
-  var monitors_8 = monitors.DeviceAmbientLightMonitor;
-  var monitors_9 = monitors.DeviceNavigatorMonitor;
-
-  var monitors$1 = /*#__PURE__*/Object.freeze({
-    default: monitors,
-    __moduleExports: monitors,
-    GlobalSensorMonitor: monitors_1,
-    BatteryMonitor: monitors_2,
-    GeolocationMonitor: monitors_3,
-    DeviceOrientationMonitor: monitors_4,
-    DeviceMotionMonitor: monitors_5,
-    DeviceLightMonitor: monitors_6,
-    DeviceProximityMonitor: monitors_7,
-    DeviceAmbientLightMonitor: monitors_8,
-    DeviceNavigatorMonitor: monitors_9
-  });
 
   function serializeState (state) {
     const serialized = {};
@@ -1029,29 +914,8 @@
     serializePosition,
     serializeDeviceOrientationEvent
   };
-  var serialziers_1 = serialziers.serializeState;
-  var serialziers_2 = serialziers.serializeDeviceMotionEvent;
-  var serialziers_3 = serialziers.serializeNavigator;
-  var serialziers_4 = serialziers.serializeBatteryManager;
-  var serialziers_5 = serialziers.serializePosition;
-  var serialziers_6 = serialziers.serializeDeviceOrientationEvent;
 
-  var serialziers$1 = /*#__PURE__*/Object.freeze({
-    default: serialziers,
-    __moduleExports: serialziers,
-    serializeState: serialziers_1,
-    serializeDeviceMotionEvent: serialziers_2,
-    serializeNavigator: serialziers_3,
-    serializeBatteryManager: serialziers_4,
-    serializePosition: serialziers_5,
-    serializeDeviceOrientationEvent: serialziers_6
-  });
-
-  var require$$0 = ( monitors$1 && monitors ) || monitors$1;
-
-  var require$$1 = ( serialziers$1 && serialziers ) || serialziers$1;
-
-  const { BatteryMonitor: BatteryMonitor$1, GlobalSensorMonitor: GlobalSensorMonitor$1 } = require$$0;
+  const { BatteryMonitor: BatteryMonitor$1, GlobalSensorMonitor: GlobalSensorMonitor$1 } = monitors;
   const {
     serializeBatteryManager: serializeBatteryManager$1,
     serializeDeviceMotionEvent: serializeDeviceMotionEvent$1,
@@ -1059,7 +923,7 @@
     serializeNavigator: serializeNavigator$1,
     serializePosition: serializePosition$1,
     serializeState: serializeState$1
-  } = require$$1;
+  } = serialziers;
 
   class Sensor {
     constructor (opts, monitorClass, serializeFn) {

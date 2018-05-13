@@ -25,13 +25,13 @@ test('test BatteryMonitorSensor', async t => {
 test('test GlobalSensor', async t => {
   const globalSensor = new GlobalSensor()
 
-  const globalSensor = new Promise((resolve, reject) => {
+  const globalSensorPromise = new Promise((resolve, reject) => {
     globalSensor.listen(data => {
       resolve(data)
     })
   })
 
-  const globalSensorResponse = await globalSensor
+  const globalSensorResponse = await globalSensorPromise
   t.deepEqual(globalSensorResponse, {
     battery: windowMocks.mockedBattery,
     navigator: windowMocks.mockedNavigator,

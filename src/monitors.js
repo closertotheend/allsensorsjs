@@ -101,10 +101,9 @@ class GeolocationMonitor extends SensorMonitor {
         geo => {
           this.state.geo = geo
         },
-        () => undefined,
+        (a1,a2) => undefined,
         {
           enableHighAccuracy: true,
-          timeout: this.queryPeriod,
           maximumAge: 0
         }
       )
