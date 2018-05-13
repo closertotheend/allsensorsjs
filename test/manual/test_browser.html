@@ -115,28 +115,52 @@
                 </div>
                 <h3 class="sensor-block-heading">DEVICE MOTION</h3>
                 <div class="info-row">
-                    x:&nbsp;
+                    X:&nbsp;
                     <span id="devicemotion-x">?</span>
                 </div>
                 <div class="info-row">
-                    y:&nbsp;
+                    Y:&nbsp;
                     <span id="devicemotion-y">?</span>
                 </div>
                 <div class="info-row">
-                    z:&nbsp;
+                    Z:&nbsp;
                     <span id="devicemotion-z">?</span>
                 </div>
                 <div class="info-row">
-                    alpha:&nbsp;
+                    Alpha:&nbsp;
                     <span id="devicemotion-alpha">?</span>
                 </div>
                 <div class="info-row">
-                    beta:&nbsp;
+                    Beta:&nbsp;
                     <span id="devicemotion-beta">?</span>
                 </div>
                 <div class="info-row">
-                    gamma:&nbsp;
+                    Gamma:&nbsp;
                     <span id="devicemotion-gamma">?</span>
+                </div>
+            </div>
+            <div class="sensor-block">
+                <div class="logo-container">
+                    <i id="battery-icon" class="material-icons" style="font-size:3em">
+                        3d_rotation
+                    </i>
+                </div>
+                <h3 class="sensor-block-heading">DEVICE ORIENTATION</h3>
+                <div class="info-row">
+                    Alpha:&nbsp;
+                    <span id="deviceorientation-alpha">?</span>
+                </div>
+                <div class="info-row">
+                    Beta:&nbsp;
+                    <span id="deviceorientation-beta">?</span>
+                </div>
+                <div class="info-row">
+                    Gamma:&nbsp;
+                    <span id="deviceorientation-gamma">?</span>
+                </div>
+                <div class="info-row">
+                    Is Absolute?&nbsp;
+                    <span id="deviceorientation-absolute">?</span>
                 </div>
             </div>
         </div>
@@ -208,6 +232,14 @@
                     set("devicemotion-beta", devicemotion.rotationRate.beta)
                     set("devicemotion-gamma", devicemotion.rotationRate.gamma)
                 }
+            }
+
+            const deviceorientation = state.deviceorientation;
+            if (deviceorientation) {
+                set("deviceorientation-alpha", deviceorientation.alpha)
+                set("deviceorientation-beta", deviceorientation.beta)
+                set("deviceorientation-gamma", deviceorientation.gamma)
+                set("deviceorientation-absolute", deviceorientation.absolute)
             }
         })
     </script>
