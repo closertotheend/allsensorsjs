@@ -1,18 +1,214 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Sensors test page</title>
+    <meta charset="UTF-8">
+    <title>Sensors test page</title>
+    <link rel="stylesheet" href="https://unpkg.com/blaze@4.0.0-7/scss/dist/blaze.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+    <style>
+        html,
+        body {
+            font-size: 14px;
+            background-color: yellow;
+            font-family: 'Source Code Pro', monospace;
+            padding: 1rem
+        }
+
+        pre {
+            font-family: 'Source Code Pro', monospace;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: center
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center
+        }
+
+        .sensor-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .sensor-block-heading {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+        }
+    </style>
 </head>
 
 <body>
-<div id="content">Loading content of the document..... </div>
-<script src="../../dist/index.js"></script>
-<script>
-        var sensor = new allsensors.GlobalSensor({queryPeriod: 1000})
-        sensor.listen((state)=>{
+
+    <div style="display: flex">
+
+        <div style="width: 50%;">
+            <div class="sensor-block">
+                <div class="logo-container">
+                    <i id="battery-icon" class="material-icons" style="font-size:3em">
+                        battery_unknown
+                    </i>
+                </div>
+                <h3 class="sensor-block-heading">BATTERY STATUS</h3>
+                <div class="info-row">
+                    Level&nbsp;
+                    <span id="battery-level"></span>
+                </div>
+                <div class="info-row">
+                    Is charging?&nbsp;
+                    <span id="battery-charging">?</span>
+                </div>
+                <div class="info-row">
+                    Discharging time:&nbsp;
+                    <span id="battery-discharging">?</span>
+                </div>
+                <div class="info-row">
+                    Charging time:&nbsp;
+                    <span id="battery-charging-time">?</span>
+                </div>
+            </div>
+            <div class="sensor-block">
+                <div class="logo-container">
+                    <i id="battery-icon" class="material-icons" style="font-size:3em">
+                        navigation
+                    </i>
+                </div>
+                <h3 class="sensor-block-heading">NAVIGATOR</h3>
+                <div class="info-row">
+                    Platform:&nbsp;
+                    <span id="navigator-platform">?</span>
+                </div>
+                <div class="info-row">
+                    Language:&nbsp;
+                    <span id="navigator-language">?</span>
+                </div>
+                <div class="info-row">
+                    Languages:&nbsp;
+                    <span id="navigator-languages">?</span>
+                </div>
+                <div class="info-row">
+                    Available device memory:&nbsp;
+                    <span id="navigator-memory">?</span>
+                </div>
+                <div class="info-row">
+                    Number of CPU cores:&nbsp;
+                    <span id="navigator-cores">?</span>
+                </div>
+                <div class="info-row">
+                    User agent:&nbsp;
+                    <span id="navigator-useragent">?</span>
+                </div>
+                <div class="info-row">
+                    App version:&nbsp;
+                    <span id="navigator-app-version">?</span>
+                </div>
+            </div>
+            <div class="sensor-block">
+                <div class="logo-container">
+                    <i id="battery-icon" class="material-icons" style="font-size:3em">
+                        directions_bike
+                    </i>
+                </div>
+                <h3 class="sensor-block-heading">DEVICE MOTION</h3>
+                <div class="info-row">
+                    x:&nbsp;
+                    <span id="devicemotion-x">?</span>
+                </div>
+                <div class="info-row">
+                    y:&nbsp;
+                    <span id="devicemotion-y">?</span>
+                </div>
+                <div class="info-row">
+                    z:&nbsp;
+                    <span id="devicemotion-z">?</span>
+                </div>
+                <div class="info-row">
+                    alpha:&nbsp;
+                    <span id="devicemotion-alpha">?</span>
+                </div>
+                <div class="info-row">
+                    beta:&nbsp;
+                    <span id="devicemotion-beta">?</span>
+                </div>
+                <div class="info-row">
+                    gamma:&nbsp;
+                    <span id="devicemotion-gamma">?</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 50%;overflow-x: scroll">
+            <div class="o-grid-text">
+                <pre id="contentJson">Loading content of the document..... </pre>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../../dist/index.js"></script>
+
+
+    <script>
+        function set(id, html) {
+            document.getElementById(id).innerHTML = html
+        }
+
+        var sensor = new allsensors.GlobalSensor({ queryPeriod: 1000 })
+        sensor.listen((state) => {
             var serialized = sensor.serialize(state);
-            document.getElementById("content").innerHTML = JSON.stringify(serialized)
+
+            set("contentJson", JSON.stringify(serialized, null, 4))
+
+            const battery = state.battery;
+            if (battery) {
+                const batteryLevel = battery.level * 100;
+                set("battery-level", batteryLevel + " %")
+                set("battery-charging", battery.charging ? "Yes" : "No")
+
+                var batteryIconClass = "battery"
+                if (battery.charging) {
+                    batteryIconClass += "_charging"
+                }
+                batteryIconClass += "_" + (batteryLevel - (batteryLevel % 10))
+
+                //set("battery-icon", batteryIconClass)
+                if (battery.dischargingTime && battery.dischargingTime !== Infinity) {
+                    set("battery-discharging", battery.dischargingTime + " s")
+                }
+                if (battery.chargingTime && battery.chargingTime !== Infinity) {
+                    set("battery-charging-time", battery.chargingTime + " s")
+                }
+            }
+
+            const navigator = state.navigator;
+            if (navigator) {
+                set("navigator-useragent", navigator.userAgent)
+                set("navigator-language", navigator.language)
+                set("navigator-languages", navigator.languages.join())
+                set("navigator-platform", navigator.platform)
+                set("navigator-memory", navigator.deviceMemory)
+                set("navigator-cores", navigator.hardwareConcurrency)
+                set("navigator-app-version", navigator.appVersion)
+            }
+
+
+            const devicemotion = state.devicemotion;
+            if (devicemotion) {
+                if (devicemotion.acceleration) {
+                    set("devicemotion-x", devicemotion.acceleration.x)
+                    set("devicemotion-y", devicemotion.acceleration.y)
+                    set("devicemotion-z", devicemotion.acceleration.z)
+                }
+                if (devicemotion.rotationRate) {
+                    set("devicemotion-alpha", devicemotion.rotationRate.alpha)
+                    set("devicemotion-beta", devicemotion.rotationRate.beta)
+                    set("devicemotion-gamma", devicemotion.rotationRate.gamma)
+                }
+            }
         })
     </script>
 </body>
