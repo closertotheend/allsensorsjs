@@ -11,7 +11,7 @@
         html,
         body {
             font-size: 14px;
-            background-color: yellow;
+            background-color: #f9f969;
             font-family: 'Source Code Pro', monospace;
             padding: 1rem
         }
@@ -22,7 +22,10 @@
 
         .info-row {
             display: flex;
-            justify-content: center
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+            width: 500px;
         }
 
         .logo-container {
@@ -32,12 +35,19 @@
 
         .sensor-block {
             margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
         }
 
         .sensor-block-heading {
             text-align: center;
             margin-bottom: 0.5rem;
             margin-top: 0.5rem;
+        }
+
+        .sensor-attribute {
+            font-weight: 600;
+            margin-right: 0.5rem;
         }
     </style>
 </head>
@@ -55,20 +65,48 @@
                 </div>
                 <h3 class="sensor-block-heading">BATTERY STATUS</h3>
                 <div class="info-row">
-                    Level&nbsp;
-                    <span id="battery-level"></span>
+                    <span class="sensor-attribute">Level</span>
+                    <span id="battery-level">?</span>
                 </div>
                 <div class="info-row">
-                    Is charging?&nbsp;
+                    <span class="sensor-attribute">Is charging?</span>
                     <span id="battery-charging">?</span>
                 </div>
                 <div class="info-row">
-                    Discharging time:&nbsp;
+                    <span class="sensor-attribute"> Discharging time:</span>
                     <span id="battery-discharging">?</span>
                 </div>
                 <div class="info-row">
-                    Charging time:&nbsp;
+                    <span class="sensor-attribute">Charging time:</span>
                     <span id="battery-charging-time">?</span>
+                </div>
+            </div>
+            <div class="sensor-block">
+                <div class="logo-container">
+                    <i id="battery-icon" class="material-icons" style="font-size:3em">
+                        location_on
+                    </i>
+                </div>
+                <h3 class="sensor-block-heading">GEO</h3>
+                <div class="info-row">
+                    <span class="sensor-attribute">Latitude:</span>
+                    <span id="geo-latitude">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Longitude:</span>
+                    <span id="geo-longitude">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Altitude:</span>
+                    <span id="geo-altitude">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Accuracy:</span>
+                    <span id="geo-accuracy">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute"> Speed:</span>
+                    <span id="geo-speed">?</span>
                 </div>
             </div>
             <div class="sensor-block">
@@ -79,31 +117,31 @@
                 </div>
                 <h3 class="sensor-block-heading">NAVIGATOR</h3>
                 <div class="info-row">
-                    Platform:&nbsp;
+                    <span class="sensor-attribute">Platform:</span>
                     <span id="navigator-platform">?</span>
                 </div>
                 <div class="info-row">
-                    Language:&nbsp;
+                    <span class="sensor-attribute"> Language:</span>
                     <span id="navigator-language">?</span>
                 </div>
                 <div class="info-row">
-                    Languages:&nbsp;
+                    <span class="sensor-attribute"> Languages:</span>
                     <span id="navigator-languages">?</span>
                 </div>
                 <div class="info-row">
-                    Available device memory:&nbsp;
+                    <span class="sensor-attribute">Available device memory:&nbsp</span>;
                     <span id="navigator-memory">?</span>
                 </div>
                 <div class="info-row">
-                    Number of CPU cores:&nbsp;
+                    <span class="sensor-attribute">Number of CPU cores:</span>
                     <span id="navigator-cores">?</span>
                 </div>
                 <div class="info-row">
-                    User agent:&nbsp;
+                    <span class="sensor-attribute">User agent:</span>
                     <span id="navigator-useragent">?</span>
                 </div>
                 <div class="info-row">
-                    App version:&nbsp;
+                    <span class="sensor-attribute"> App version:</span>
                     <span id="navigator-app-version">?</span>
                 </div>
             </div>
@@ -115,27 +153,27 @@
                 </div>
                 <h3 class="sensor-block-heading">DEVICE MOTION</h3>
                 <div class="info-row">
-                    X:&nbsp;
+                    <span class="sensor-attribute">X:</span>
                     <span id="devicemotion-x">?</span>
                 </div>
                 <div class="info-row">
-                    Y:&nbsp;
+                    <span class="sensor-attribute"> Y:</span>
                     <span id="devicemotion-y">?</span>
                 </div>
                 <div class="info-row">
-                    Z:&nbsp;
+                    <span class="sensor-attribute">Z:</span>
                     <span id="devicemotion-z">?</span>
                 </div>
                 <div class="info-row">
-                    Alpha:&nbsp;
+                    <span class="sensor-attribute">Alpha:</span>
                     <span id="devicemotion-alpha">?</span>
                 </div>
                 <div class="info-row">
-                    Beta:&nbsp;
+                    <span class="sensor-attribute">Beta:</span>
                     <span id="devicemotion-beta">?</span>
                 </div>
                 <div class="info-row">
-                    Gamma:&nbsp;
+                    <span class="sensor-attribute">Gamma:</span>
                     <span id="devicemotion-gamma">?</span>
                 </div>
             </div>
@@ -147,19 +185,19 @@
                 </div>
                 <h3 class="sensor-block-heading">DEVICE ORIENTATION</h3>
                 <div class="info-row">
-                    Alpha:&nbsp;
+                    <span class="sensor-attribute">Alpha:</span>
                     <span id="deviceorientation-alpha">?</span>
                 </div>
                 <div class="info-row">
-                    Beta:&nbsp;
+                    <span class="sensor-attribute">Beta:</span>
                     <span id="deviceorientation-beta">?</span>
                 </div>
                 <div class="info-row">
-                    Gamma:&nbsp;
+                    <span class="sensor-attribute">Gamma:</span>
                     <span id="deviceorientation-gamma">?</span>
                 </div>
                 <div class="info-row">
-                    Is Absolute?&nbsp;
+                    <span class="sensor-attribute">Is Absolute?</span>
                     <span id="deviceorientation-absolute">?</span>
                 </div>
             </div>
@@ -240,6 +278,15 @@
                 set("deviceorientation-beta", deviceorientation.beta)
                 set("deviceorientation-gamma", deviceorientation.gamma)
                 set("deviceorientation-absolute", deviceorientation.absolute)
+            }
+
+            const geo = state.geo;
+            if (geo.coords) {
+                set("geo-latitude", geo.coords.latitude)
+                set("geo-longitude", geo.coords.longitude)
+                set("geo-altitude", geo.coords.altitude)
+                set("geo-accuracy", geo.coords.accuracy)
+                set("geo-speed", geo.coords.speed)
             }
         })
     </script>
