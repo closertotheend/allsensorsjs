@@ -229,6 +229,5 @@ module.exports = {
   DeviceLightMonitor,
   DeviceProximityMonitor,
   DeviceAmbientLightMonitor,
-//@flow
   DeviceNavigatorMonitor
 }
