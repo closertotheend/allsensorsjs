@@ -8,7 +8,7 @@ class SensorMonitor {
   /*:: state: Object */
   /*:: queryPeriod: number */
   /*:: throttlify: (x: Object) => Object */
-  constructor (opts/*:Options */) {
+  constructor (opts /*: Options */) {
     if (!opts) {
       opts = {}
     }
@@ -38,7 +38,7 @@ class SensorMonitor {
 }
 
 class GlobalSensorMonitor extends SensorMonitor {
-  constructor (opts/*:Options */) {
+  constructor (opts /*: Options */) {
     super()
   }
 
@@ -80,7 +80,7 @@ class GlobalSensorMonitor extends SensorMonitor {
 }
 
 class BatteryMonitor extends SensorMonitor {
-  constructor (args/*:Options */) {
+  constructor (args /*: Options */) {
     super(args)
   }
 
@@ -98,7 +98,7 @@ class BatteryMonitor extends SensorMonitor {
 }
 
 class GeolocationMonitor extends SensorMonitor {
-  constructor (args/*:Options */) {
+  constructor (args /*: Options */) {
     super(args)
   }
 
@@ -108,7 +108,7 @@ class GeolocationMonitor extends SensorMonitor {
         geo => {
           this.state.geo = geo
         },
-        (a1,a2) => undefined,
+        (a1, a2) => undefined,
         {
           enableHighAccuracy: true,
           maximumAge: 0,
@@ -121,7 +121,7 @@ class GeolocationMonitor extends SensorMonitor {
 }
 
 class DeviceOrientationMonitor extends SensorMonitor {
-  constructor (args/*:Options */) {
+  constructor (args /*: Options */) {
     super(args)
   }
 
@@ -137,7 +137,7 @@ class DeviceOrientationMonitor extends SensorMonitor {
 }
 
 class DeviceMotionMonitor extends SensorMonitor {
-  constructor (args/*:Options */) {
+  constructor (args /*: Options */) {
     super(args)
   }
 
@@ -154,7 +154,7 @@ class DeviceMotionMonitor extends SensorMonitor {
 }
 
 class DeviceLightMonitor extends SensorMonitor {
-  constructor (args/*:Options */) {
+  constructor (args /*: Options */) {
     super(args)
   }
 
@@ -171,7 +171,7 @@ class DeviceLightMonitor extends SensorMonitor {
 }
 
 class DeviceProximityMonitor extends SensorMonitor {
-  constructor (args/*:Options */) {
+  constructor (args /*: Options */) {
     super(args)
   }
 
@@ -188,7 +188,7 @@ class DeviceProximityMonitor extends SensorMonitor {
 }
 
 class DeviceAmbientLightMonitor extends SensorMonitor {
-  constructor (args/*:Options */) {
+  constructor (args /*: Options */) {
     super(args)
   }
 
@@ -208,7 +208,7 @@ class DeviceAmbientLightMonitor extends SensorMonitor {
 }
 
 class DeviceNavigatorMonitor extends SensorMonitor {
-  constructor (args/*:Options */) {
+  constructor (args /*: Options */) {
     super(args)
   }
 

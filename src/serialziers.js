@@ -1,14 +1,14 @@
 // @flow
 /*::
 export type State = {
-  battery?:{}, 
-  geo?:{}, 
+  battery?:{},
+  geo?:{},
   deviceorientation?:{},
   devicemotion?:{},
   navigator?:{}
 }
 */
-function serializeState (state/*: State */) {
+function serializeState (state /*: State */) {
   const serialized = {}
 
   if (state.battery) {
@@ -36,13 +36,15 @@ function serializeState (state/*: State */) {
   return serialized
 }
 
-function serializeDeviceMotionEvent ({
-  acceleration,
-  accelerationIncludingGravity,
-  interval,
-  rotationRate,
-  timeStamp
-}/*: Object */) {
+function serializeDeviceMotionEvent (
+  {
+    acceleration,
+    accelerationIncludingGravity,
+    interval,
+    rotationRate,
+    timeStamp
+  } /*: Object */
+) {
   return {
     acceleration: {
       x: acceleration.x,
@@ -64,20 +66,22 @@ function serializeDeviceMotionEvent ({
   }
 }
 
-function serializeNavigator ({
-  appCodeName,
-  appVersion,
-  deviceMemory,
-  hardwareConcurrency,
-  appName,
-  languages,
-  language,
-  platform,
-  product,
-  userAgent,
-  vendor,
-  connection
-}/*: Object */) {
+function serializeNavigator (
+  {
+    appCodeName,
+    appVersion,
+    deviceMemory,
+    hardwareConcurrency,
+    appName,
+    languages,
+    language,
+    platform,
+    product,
+    userAgent,
+    vendor,
+    connection
+  } /*: Object */
+) {
   return {
     appCodeName,
     appVersion,
@@ -101,16 +105,13 @@ function serializeNavigator ({
   }
 }
 
-function serializeBatteryManager ({
-  charging,
-  chargingTime,
-  dischargingTime,
-  level
-}/*: Object */) {
+function serializeBatteryManager (
+  { charging, chargingTime, dischargingTime, level } /*: Object */
+) {
   return { charging, chargingTime, dischargingTime, level }
 }
 
-function serializePosition ({ coords }/*: Object */) {
+function serializePosition ({ coords } /*: Object */) {
   const {
     latitude,
     longitude,
@@ -133,14 +134,9 @@ function serializePosition ({ coords }/*: Object */) {
   }
 }
 
-function serializeDeviceOrientationEvent ({
-  alpha,
-  beta,
-  gamma,
-  absolute,
-  bubbles,
-  timeStamp
-}/*: Object */) {
+function serializeDeviceOrientationEvent (
+  { alpha, beta, gamma, absolute, bubbles, timeStamp } /*: Object */
+) {
   return { alpha, beta, gamma, absolute, bubbles, timeStamp }
 }
 

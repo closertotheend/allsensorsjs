@@ -17,11 +17,11 @@ const {
 } = require('./serialziers')
 
 class Sensor {
-   /*:: listeners: Array<(any: {}) => void> */
-   /*:: queryPeriod: number */
-   /*:: serialize: (state : State) => {} */
+  /*:: listeners: Array<(any: {}) => void> */
+  /*:: queryPeriod: number */
+  /*:: serialize: (state : State) => {} */
 
-  constructor (opts/*: Options */, monitorClass, serializeFn) {
+  constructor (opts /*: Options */, monitorClass, serializeFn) {
     if (opts && opts.queryPeriod) {
       this.queryPeriod = opts.queryPeriod
     } else {
@@ -41,7 +41,7 @@ class Sensor {
     }, this.queryPeriod)
   }
 
-  listen (newListener/*: (any: {}) => void */) {
+  listen (newListener /*: (any: {}) => void */) {
     this.listeners.push(newListener)
   }
 
@@ -51,13 +51,13 @@ class Sensor {
 }
 
 class GlobalSensor extends Sensor {
-  constructor (opts/*: Options */) {
+  constructor (opts /*: Options */) {
     super(opts, GlobalSensorMonitor, serializeState)
   }
 }
 
 class BatteryMonitorSensor extends Sensor {
-  constructor (opts/*: Options */) {
+  constructor (opts /*: Options */) {
     super(opts, BatteryMonitor, serializeBatteryManager)
   }
 }
