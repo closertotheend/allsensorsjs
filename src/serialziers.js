@@ -1,4 +1,14 @@
-function serializeState (state) {
+// @flow
+/*::
+export type State = {
+  battery?:{}, 
+  geo?:{}, 
+  deviceorientation?:{},
+  devicemotion?:{},
+  navigator?:{}
+}
+*/
+function serializeState (state/*: State */) {
   const serialized = {}
 
   if (state.battery) {
@@ -32,7 +42,7 @@ function serializeDeviceMotionEvent ({
   interval,
   rotationRate,
   timeStamp
-}) {
+}/*: Object */) {
   return {
     acceleration: {
       x: acceleration.x,
@@ -67,7 +77,7 @@ function serializeNavigator ({
   userAgent,
   vendor,
   connection
-}) {
+}/*: Object */) {
   return {
     appCodeName,
     appVersion,
@@ -96,11 +106,11 @@ function serializeBatteryManager ({
   chargingTime,
   dischargingTime,
   level
-}) {
+}/*: Object */) {
   return { charging, chargingTime, dischargingTime, level }
 }
 
-function serializePosition ({ coords }) {
+function serializePosition ({ coords }/*: Object */) {
   const {
     latitude,
     longitude,
@@ -130,7 +140,7 @@ function serializeDeviceOrientationEvent ({
   absolute,
   bubbles,
   timeStamp
-}) {
+}/*: Object */) {
   return { alpha, beta, gamma, absolute, bubbles, timeStamp }
 }
 

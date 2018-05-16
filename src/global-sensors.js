@@ -3,6 +3,7 @@
 type Options = {
   queryPeriod: number
 };
+import type {State} from "./serialziers";
 */
 
 const { BatteryMonitor, GlobalSensorMonitor } = require('./monitors')
@@ -18,7 +19,7 @@ const {
 class Sensor {
    /*:: listeners: Array<(any: {}) => void> */
    /*:: queryPeriod: number */
-   /*:: serialize: (state : {}) => {} */
+   /*:: serialize: (state : State) => {} */
 
   constructor (opts/*: Options */, monitorClass, serializeFn) {
     if (opts && opts.queryPeriod) {
