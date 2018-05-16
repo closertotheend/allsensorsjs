@@ -8,6 +8,7 @@
     "compile": "rollup -c",
     "compile-watch": "rollup -c -w",
     "lint": "prettier-standard '**/*.{js,css}'",
+    "flow": "flow",
     "debug": "inspect node_modules/ava/profile.js test/unit/global-sensors.test.js"
   },
   "repository": {
@@ -35,6 +36,7 @@
     "rollup-plugin-uglify": "^3.0.0"
   },
   "devDependencies": {
+    "flow-bin": "^0.72.0",
     "prettier": "1.12.1",
     "prettier-standard": "^8.0.1"
   }
