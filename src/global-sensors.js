@@ -6,7 +6,18 @@ type Options = {
 import type {State} from "./serialziers";
 */
 
-const { BatteryMonitor, GlobalSensorMonitor } = require('./monitors')
+const {
+  GlobalSensorMonitor,
+  BatteryMonitor,
+  GeolocationMonitor,
+  DeviceOrientationMonitor,
+  DeviceMotionMonitor,
+  DeviceLightMonitor,
+  DeviceProximityMonitor,
+  DeviceAmbientLightMonitor,
+  DeviceNavigatorMonitor
+} = require('./monitors')
+
 const {
   serializeBatteryManager,
   serializeDeviceMotionEvent,
@@ -56,9 +67,33 @@ class GlobalSensor extends Sensor {
   }
 }
 
-class BatteryMonitorSensor extends Sensor {
+class BatterySensor extends Sensor {
   constructor (opts /*: Options */) {
     super(opts, BatteryMonitor, serializeBatteryManager)
+  }
+}
+
+class OrientationSensor extends Sensor {
+  constructor (opts /*: Options */) {
+    super(opts, DeviceOrientationMonitor, serializeDeviceOrientationEvent)
+  }
+}
+
+class MotionSensor extends Sensor {
+  constructor (opts /*: Options */) {
+    super(opts, DeviceMotionMonitor, serializeDeviceMotionEvent)
+  }
+}
+
+class GeolocationSensor extends Sensor {
+  constructor (opts /*: Options */) {
+    super(opts, GeolocationMonitor, serializePosition)
+  }
+}
+
+class NavigatorSensor extends Sensor {
+  constructor (opts /*: Options */) {
+    super(opts, DeviceNavigatorMonitor, serializeNavigator)
   }
 }
 
@@ -70,5 +105,9 @@ module.exports = {
   serializeDeviceMotionEvent,
   serializeNavigator,
   GlobalSensor,
-  BatteryMonitorSensor
+  BatterySensor,
+  // OrientationSensor,
+  // MotionSensor,
+  // GeolocationSensor,
+  // NavigatorSensor,
 }
