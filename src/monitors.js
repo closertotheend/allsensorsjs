@@ -1,6 +1,7 @@
 // @flow
 /*::
 type Options = ?{queryPeriod?:number, state?:{}}
+export type { SensorMonitor };
 */
 const throttle = require('lodash/throttle')
 
@@ -222,6 +223,7 @@ class DeviceNavigatorMonitor extends SensorMonitor {
 }
 
 module.exports = {
+  SensorMonitor,
   GlobalSensorMonitor,
   BatteryMonitor,
   GeolocationMonitor,

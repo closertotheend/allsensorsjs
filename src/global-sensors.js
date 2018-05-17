@@ -4,6 +4,7 @@ type Options = {
   queryPeriod: number
 };
 import type {State} from "./serialziers";
+import type {SensorMonitor} from "./monitors";
 */
 
 const {
@@ -31,6 +32,7 @@ class Sensor {
   /*:: listeners: Array<(any: {}) => void> */
   /*:: queryPeriod: number */
   /*:: serialize: (state : State) => {} */
+  /*:: monitor: SensorMonitor */
 
   constructor (opts /*: Options */, monitorClass, serializeFn) {
     if (opts && opts.queryPeriod) {
@@ -39,7 +41,7 @@ class Sensor {
       this.queryPeriod = 0
     }
 
-    const monitor = new monitorClass({
+    this.monitor = new monitorClass({
       queryPeriod: this.queryPeriod
     }).startListening()
 
@@ -47,7 +49,7 @@ class Sensor {
 
     this.listeners = []
     setInterval(() => {
-      const state = monitor.state
+      const state = this.monitor.state
       this.listeners.forEach(listener => listener.call(null, state))
     }, this.queryPeriod)
   }
