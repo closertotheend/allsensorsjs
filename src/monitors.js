@@ -134,7 +134,7 @@ class DeviceOrientationMonitor extends SensorMonitor {
       }),
       false
     )
-    return this;
+    return this
   }
 }
 

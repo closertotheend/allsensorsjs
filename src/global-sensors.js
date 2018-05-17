@@ -107,7 +107,7 @@ module.exports = {
   serializeDeviceMotionEvent,
   serializeNavigator,
   GlobalSensor,
-  BatterySensor,
+  BatterySensor
   // OrientationSensor,
   // MotionSensor,
   // GeolocationSensor,
