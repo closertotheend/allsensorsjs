@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/blaze@4.0.0-7/scss/dist/blaze.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         html,
         body {
@@ -21,11 +22,8 @@
         }
 
         .info-row {
-            display: flex;
-            justify-content: center;
             margin-left: auto;
             margin-right: auto;
-            width: 500px;
         }
 
         .logo-container {
@@ -49,15 +47,47 @@
             font-weight: 600;
             margin-right: 0.5rem;
         }
+
+        .main-container {
+            display: flex;
+        }
+
+        @media screen and (max-width: 992px) {
+            .main-container {
+                flex-direction: column
+            }
+        }
+
+        .main-container__first-part {
+            width: 50%
+        }
+
+        @media screen and (max-width: 992px) {
+            .main-container__first-part {
+                width: 100%
+            }
+        }
+
+        .main-container__second-part {
+            width: 50%;
+            overflow-x: auto;
+        }
+        
+        @media screen and (max-width: 992px) {
+            .main-container__second-part {
+                width: 100%
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
-    <div style="display: flex">
+    <div class="main-container">
 
-        <div style="width: 50%;">
-            <div class="sensor-block">
+        <div class="main-container__first-part">
+            <div id="battery" class="sensor-block">
                 <div class="logo-container">
                     <i id="battery-icon" class="material-icons" style="font-size:3em">
                         battery_unknown
@@ -81,9 +111,9 @@
                     <span id="battery-charging-time">?</span>
                 </div>
             </div>
-            <div class="sensor-block">
+            <div id="geo" class="sensor-block">
                 <div class="logo-container">
-                    <i id="battery-icon" class="material-icons" style="font-size:3em">
+                    <i class="material-icons" style="font-size:3em">
                         location_on
                     </i>
                 </div>
@@ -109,9 +139,9 @@
                     <span id="geo-speed">?</span>
                 </div>
             </div>
-            <div class="sensor-block">
+            <div id="navigator" class="sensor-block">
                 <div class="logo-container">
-                    <i id="battery-icon" class="material-icons" style="font-size:3em">
+                    <i class="material-icons" style="font-size:3em">
                         navigation
                     </i>
                 </div>
@@ -145,9 +175,9 @@
                     <span id="navigator-app-version">?</span>
                 </div>
             </div>
-            <div class="sensor-block">
+            <div id="device-motion" class="sensor-block">
                 <div class="logo-container">
-                    <i id="battery-icon" class="material-icons" style="font-size:3em">
+                    <i class="material-icons" style="font-size:3em">
                         directions_bike
                     </i>
                 </div>
@@ -177,9 +207,9 @@
                     <span id="devicemotion-gamma">?</span>
                 </div>
             </div>
-            <div class="sensor-block">
+            <div id="device-orientation" class="sensor-block">
                 <div class="logo-container">
-                    <i id="battery-icon" class="material-icons" style="font-size:3em">
+                    <i class="material-icons" style="font-size:3em">
                         3d_rotation
                     </i>
                 </div>
@@ -203,7 +233,8 @@
             </div>
         </div>
 
-        <div style="width: 50%;overflow-x: scroll">
+        <div class="main-container__second-part">
+            <h3 style="text-align: center">JSON view</h3>
             <div class="o-grid-text">
                 <pre id="contentJson">Loading content of the document..... </pre>
             </div>
