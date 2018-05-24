@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sensors test page</title>
+    <link rel="stylesheet" href="https://unpkg.com/blaze@4.0.0-7/scss/dist/blaze.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html,
+        body {
+            font-size: 14px;
+            background-color: #f9f969;
+            font-family: 'Source Code Pro', monospace;
+            padding: 1rem
+        }
+
+        pre {
+            font-family: 'Source Code Pro', monospace;
+        }
+
+        .info-row {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center
+        }
+
+        .sensor-block {
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sensor-block-heading {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .sensor-attribute {
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .main-container {
+            display: flex;
+        }
+
+        @media screen and (max-width: 992px) {
+            .main-container {
+                flex-direction: column
+            }
+        }
+
+        .main-container__first-part {
+            width: 50%
+        }
+
+        @media screen and (max-width: 992px) {
+            .main-container__first-part {
+                width: 100%
+            }
+        }
+
+        .main-container__second-part {
+            width: 50%;
+            overflow-x: auto;
+        }
+        
+        @media screen and (max-width: 992px) {
+            .main-container__second-part {
+                width: 100%
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+
+        <div class="main-container__first-part">
+            <div id="battery" class="sensor-block">
+                <div class="logo-container">
+                    <i id="battery-icon" class="material-icons" style="font-size:3em">
+                        battery_unknown
+                    </i>
+                </div>
+                <h3 class="sensor-block-heading">BATTERY STATUS</h3>
+                <div class="info-row">
+                    <span class="sensor-attribute">Level</span>
+                    <span id="battery-level">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Is charging?</span>
+                    <span id="battery-charging">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute"> Discharging time:</span>
+                    <span id="battery-discharging">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Charging time:</span>
+                    <span id="battery-charging-time">?</span>
+                </div>
+            </div>
+            <div id="geo" class="sensor-block">
+                <div class="logo-container">
+                    <i class="material-icons" style="font-size:3em">
+                        location_on
+                    </i>
+                </div>
+                <h3 class="sensor-block-heading">GEO</h3>
+                <div class="info-row">
+                    <span class="sensor-attribute">Latitude:</span>
+                    <span id="geo-latitude">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Longitude:</span>
+                    <span id="geo-longitude">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Altitude:</span>
+                    <span id="geo-altitude">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Accuracy:</span>
+                    <span id="geo-accuracy">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute"> Speed:</span>
+                    <span id="geo-speed">?</span>
+                </div>
+            </div>
+            <div id="navigator" class="sensor-block">
+                <div class="logo-container">
+                    <i class="material-icons" style="font-size:3em">
+                        navigation
+                    </i>
+                </div>
+                <h3 class="sensor-block-heading">NAVIGATOR</h3>
+                <div class="info-row">
+                    <span class="sensor-attribute">Platform:</span>
+                    <span id="navigator-platform">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute"> Language:</span>
+                    <span id="navigator-language">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute"> Languages:</span>
+                    <span id="navigator-languages">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Available device memory:&nbsp</span>;
+                    <span id="navigator-memory">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Number of CPU cores:</span>
+                    <span id="navigator-cores">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">User agent:</span>
+                    <span id="navigator-useragent">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute"> App version:</span>
+                    <span id="navigator-app-version">?</span>
+                </div>
+            </div>
+            <div id="device-motion" class="sensor-block">
+                <div class="logo-container">
+                    <i class="material-icons" style="font-size:3em">
+                        directions_bike
+                    </i>
+                </div>
+                <h3 class="sensor-block-heading">DEVICE MOTION</h3>
+                <div class="info-row">
+                    <span class="sensor-attribute">X:</span>
+                    <span id="devicemotion-x">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute"> Y:</span>
+                    <span id="devicemotion-y">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Z:</span>
+                    <span id="devicemotion-z">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Alpha:</span>
+                    <span id="devicemotion-alpha">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Beta:</span>
+                    <span id="devicemotion-beta">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Gamma:</span>
+                    <span id="devicemotion-gamma">?</span>
+                </div>
+            </div>
+            <div id="device-orientation" class="sensor-block">
+                <div class="logo-container">
+                    <i class="material-icons" style="font-size:3em">
+                        3d_rotation
+                    </i>
+                </div>
+                <h3 class="sensor-block-heading">DEVICE ORIENTATION</h3>
+                <div class="info-row">
+                    <span class="sensor-attribute">Alpha:</span>
+                    <span id="deviceorientation-alpha">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Beta:</span>
+                    <span id="deviceorientation-beta">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Gamma:</span>
+                    <span id="deviceorientation-gamma">?</span>
+                </div>
+                <div class="info-row">
+                    <span class="sensor-attribute">Is Absolute?</span>
+                    <span id="deviceorientation-absolute">?</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-container__second-part">
+            <h3 style="text-align: center">JSON view</h3>
+            <div class="o-grid-text">
+                <pre id="contentJson">Loading content of the document..... </pre>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../../dist/index.js"></script>
+
+
+    <script>
+        function set(id, html) {
+            document.getElementById(id).innerHTML = html
+        }
+
+        var sensor = new allsensors.GlobalSensor({ queryPeriod: 1000 })
+        sensor.listen((state) => {
+            var serialized = sensor.serialize(state);
+
+            set("contentJson", JSON.stringify(serialized, null, 4))
+
+            const battery = state.battery;
+            if (battery) {
+                const batteryLevel = battery.level * 100;
+                set("battery-level", batteryLevel + " %")
+                set("battery-charging", battery.charging ? "Yes" : "No")
+
+                var batteryIconClass = "battery"
+                if (battery.charging) {
+                    batteryIconClass += "_charging"
+                }
+                batteryIconClass += "_" + (batteryLevel - (batteryLevel % 10))
+
+                //set("battery-icon", batteryIconClass)
+                if (battery.dischargingTime && battery.dischargingTime !== Infinity) {
+                    set("battery-discharging", battery.dischargingTime + " s")
+                }
+                if (battery.chargingTime && battery.chargingTime !== Infinity) {
+                    set("battery-charging-time", battery.chargingTime + " s")
+                }
+            }
+
+            const navigator = state.navigator;
+            if (navigator) {
+                set("navigator-useragent", navigator.userAgent)
+                set("navigator-language", navigator.language)
+                set("navigator-languages", navigator.languages.join())
+                set("navigator-platform", navigator.platform)
+                set("navigator-memory", navigator.deviceMemory)
+                set("navigator-cores", navigator.hardwareConcurrency)
+                set("navigator-app-version", navigator.appVersion)
+            }
+
+
+            const devicemotion = state.devicemotion;
+            if (devicemotion) {
+                if (devicemotion.acceleration) {
+                    set("devicemotion-x", devicemotion.acceleration.x)
+                    set("devicemotion-y", devicemotion.acceleration.y)
+                    set("devicemotion-z", devicemotion.acceleration.z)
+                }
+                if (devicemotion.rotationRate) {
+                    set("devicemotion-alpha", devicemotion.rotationRate.alpha)
+                    set("devicemotion-beta", devicemotion.rotationRate.beta)
+                    set("devicemotion-gamma", devicemotion.rotationRate.gamma)
+                }
+            }
+
+            const deviceorientation = state.deviceorientation;
+            if (deviceorientation) {
+                set("deviceorientation-alpha", deviceorientation.alpha)
+                set("deviceorientation-beta", deviceorientation.beta)
+                set("deviceorientation-gamma", deviceorientation.gamma)
+                set("deviceorientation-absolute", deviceorientation.absolute)
+            }
+
+            const geo = state.geo;
+            if (geo.coords) {
+                set("geo-latitude", geo.coords.latitude)
+                set("geo-longitude", geo.coords.longitude)
+                set("geo-altitude", geo.coords.altitude)
+                set("geo-accuracy", geo.coords.accuracy)
+                set("geo-speed", geo.coords.speed)
+            }
+        })
+    </script>
+</body>
+
+</html>
