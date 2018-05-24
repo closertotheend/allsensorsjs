@@ -257,7 +257,7 @@
             set("contentJson", JSON.stringify(serialized, null, 4))
 
             const battery = state.battery;
-            if (battery) {
+            if (battery) {hist
                 const batteryLevel = battery.level * 100;
                 set("battery-level", batteryLevel + " %")
                 set("battery-charging", battery.charging ? "Yes" : "No")
