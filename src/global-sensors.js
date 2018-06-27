@@ -1,6 +1,6 @@
 // @flow
 /*::
-type Options = {
+type Options = ?{
   queryPeriod: number
 };
 import type {State} from "./serializers";
@@ -71,35 +71,31 @@ class GlobalSensor extends Sensor {
 
 class BatterySensor extends Sensor {
   constructor (opts /*: Options */) {
-    super(opts, BatteryMonitor, ({battery}) => {
-      return serializeBatteryManager(battery)
-    })
+    super(opts, BatteryMonitor, ({battery}) => serializeBatteryManager(battery))
   }
 }
 
 class OrientationSensor extends Sensor {
   constructor (opts /*: Options */) {
-    super(opts, DeviceOrientationMonitor, serializeDeviceOrientationEvent)
+    super(opts, DeviceOrientationMonitor, ({deviceorientation}) => serializeDeviceOrientationEvent(deviceorientation))
   }
 }
 
 class MotionSensor extends Sensor {
   constructor (opts /*: Options */) { 
-    super(opts, DeviceMotionMonitor, serializeDeviceMotionEvent)
+    super(opts, DeviceMotionMonitor, ({devicemotion}) => serializeDeviceMotionEvent(devicemotion))
   }
 }
 
 class GeolocationSensor extends Sensor {
   constructor (opts /*: Options */) {
-    super(opts, GeolocationMonitor, serializePosition)
+    super(opts, GeolocationMonitor, ({geo}) => serializePosition(geo))
   }
 }
 
 class NavigatorSensor extends Sensor {
   constructor (opts /*: Options */) {
-    super(opts, DeviceNavigatorMonitor, (data) => {
-      return serializeNavigator(data.navigator)
-    })
+    super(opts, DeviceNavigatorMonitor, ({navigator}) => serializeNavigator(navigator))
   }
 }
 

@@ -3,7 +3,10 @@ const { mockWindow } = require('./monitors.test')
 const {
   BatterySensor,
   GlobalSensor,
-  NavigatorSensor
+  NavigatorSensor,
+  GeolocationSensor,
+  MotionSensor,
+  OrientationSensor
 } = require('../../src/global-sensors')
 
 let windowMocks = mockWindow()
@@ -47,6 +50,27 @@ test('test NavigatorSensor', async t => {
   const sensorResponse = getResponseOf(sensor)
   const response = (await sensorResponse)
   t.deepEqual(sensor.serialize(response), windowMocks.navigator)
+})
+
+test('test GeolocationSensor', async t => {
+  const sensor = new GeolocationSensor()
+  const sensorResponse = getResponseOf(sensor)
+  const response = (await sensorResponse)
+  t.deepEqual(sensor.serialize(response), windowMocks.geo)
+})
+
+test('test MotionSensor', async t => {
+  const sensor = new MotionSensor()
+  const sensorResponse = getResponseOf(sensor)
+  const response = (await sensorResponse)
+  t.deepEqual(sensor.serialize(response), windowMocks.devicemotion)
+})
+
+test('test OrientationSensor', async t => {
+  const sensor = new OrientationSensor()
+  const sensorResponse = getResponseOf(sensor)
+  const response = (await sensorResponse)
+  t.deepEqual(sensor.serialize(response), windowMocks.deviceorientation)
 })
 
 function getResponseOf(sensor) {
