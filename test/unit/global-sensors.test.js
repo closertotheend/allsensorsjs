@@ -1,26 +1,12 @@
 const test = require('ava')
 const { mockWindow } = require('./monitors.test')
 const {
-  BatteryMonitorSensor,
-  GlobalSensor
+  BatterySensor,
+  GlobalSensor,
+  NavigatorSensor
 } = require('../../src/global-sensors')
 
 let windowMocks = mockWindow()
-
-test('test BatteryMonitorSensor', async t => {
-  const batteryMonitorSensor = new BatteryMonitorSensor()
-
-  const batteryMonitorResposne = new Promise((resolve, reject) => {
-    batteryMonitorSensor.listen(data => {
-      resolve(data)
-    })
-  })
-
-  let resp = (await batteryMonitorResposne).battery
-  t.deepEqual(resp, windowMocks.mockedBattery)
-
-  t.deepEqual(batteryMonitorSensor.serialize(resp), windowMocks.battery)
-})
 
 test('test GlobalSensor', async t => {
   const globalSensor = new GlobalSensor()
@@ -48,3 +34,25 @@ test('test GlobalSensor', async t => {
     geo: windowMocks.geo
   })
 })
+
+test('test BatterySensor', async t => {
+  const sensor = new BatterySensor()
+  const sensorResponse = getResponseOf(sensor)
+  const response = (await sensorResponse)
+  t.deepEqual(sensor.serialize(response), windowMocks.battery)
+})
+
+test('test NavigatorSensor', async t => {
+  const sensor = new NavigatorSensor()
+  const sensorResponse = getResponseOf(sensor)
+  const response = (await sensorResponse)
+  t.deepEqual(sensor.serialize(response), windowMocks.navigator)
+})
+
+function getResponseOf(sensor) {
+  return new Promise((resolve, reject) => {
+    sensor.listen(data => {
+      resolve(data);
+    });
+  });
+}

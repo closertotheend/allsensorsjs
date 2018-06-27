@@ -3,7 +3,7 @@
 type Options = {
   queryPeriod: number
 };
-import type {State} from "./serialziers";
+import type {State} from "./serializers";
 import type {SensorMonitor} from "./monitors";
 */
 
@@ -26,12 +26,12 @@ const {
   serializeNavigator,
   serializePosition,
   serializeState
-} = require('./serialziers')
+} = require('./serializers')
 
 class Sensor {
   /*:: listeners: Array<(any: {}) => void> */
   /*:: queryPeriod: number */
-  /*:: serialize: (state : State) => {} */
+  /*:: serialize: (statePart : any) => {} */
   /*:: monitor: SensorMonitor */
 
   constructor (opts /*: Options */, monitorClass, serializeFn) {
@@ -71,7 +71,9 @@ class GlobalSensor extends Sensor {
 
 class BatterySensor extends Sensor {
   constructor (opts /*: Options */) {
-    super(opts, BatteryMonitor, serializeBatteryManager)
+    super(opts, BatteryMonitor, ({battery}) => {
+      return serializeBatteryManager(battery)
+    })
   }
 }
 
@@ -82,7 +84,7 @@ class OrientationSensor extends Sensor {
 }
 
 class MotionSensor extends Sensor {
-  constructor (opts /*: Options */) {
+  constructor (opts /*: Options */) { 
     super(opts, DeviceMotionMonitor, serializeDeviceMotionEvent)
   }
 }
@@ -95,7 +97,9 @@ class GeolocationSensor extends Sensor {
 
 class NavigatorSensor extends Sensor {
   constructor (opts /*: Options */) {
-    super(opts, DeviceNavigatorMonitor, serializeNavigator)
+    super(opts, DeviceNavigatorMonitor, (data) => {
+      return serializeNavigator(data.navigator)
+    })
   }
 }
 

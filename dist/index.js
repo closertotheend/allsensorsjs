@@ -925,7 +925,7 @@
     return { alpha, beta, gamma, absolute, bubbles, timeStamp }
   }
 
-  var serialziers = {
+  var serializers = {
     serializeState,
     serializeDeviceMotionEvent,
     serializeNavigator,
@@ -939,7 +939,7 @@
   type Options = {
     queryPeriod: number
   };
-  import type {State} from "./serialziers";
+  import type {State} from "./serializers";
   import type {SensorMonitor} from "./monitors";
   */
 
@@ -962,12 +962,12 @@
     serializeNavigator: serializeNavigator$1,
     serializePosition: serializePosition$1,
     serializeState: serializeState$1
-  } = serialziers;
+  } = serializers;
 
   class Sensor {
     /*:: listeners: Array<(any: {}) => void> */
     /*:: queryPeriod: number */
-    /*:: serialize: (state : State) => {} */
+    /*:: serialize: (statePart : any) => {} */
     /*:: monitor: SensorMonitor */
 
     constructor (opts /*: Options */, monitorClass, serializeFn) {
@@ -1007,7 +1007,9 @@
 
   class BatterySensor extends Sensor {
     constructor (opts /*: Options */) {
-      super(opts, BatteryMonitor$1, serializeBatteryManager$1);
+      super(opts, BatteryMonitor$1, ({battery}) => {
+        return serializeBatteryManager$1(battery)
+      });
     }
   }
 
@@ -1018,7 +1020,7 @@
   }
 
   class MotionSensor extends Sensor {
-    constructor (opts /*: Options */) {
+    constructor (opts /*: Options */) { 
       super(opts, DeviceMotionMonitor$1, serializeDeviceMotionEvent$1);
     }
   }
@@ -1031,7 +1033,9 @@
 
   class NavigatorSensor extends Sensor {
     constructor (opts /*: Options */) {
-      super(opts, DeviceNavigatorMonitor$1, serializeNavigator$1);
+      super(opts, DeviceNavigatorMonitor$1, (data) => {
+        return serializeNavigator$1(data.navigator)
+      });
     }
   }
 

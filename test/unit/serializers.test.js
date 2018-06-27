@@ -1,5 +1,5 @@
 const test = require('ava')
-const { serializeState } = require('../../src/serialziers')
+const { serializeState } = require('../../src/serializers')
 
 const devicemotion = {
   acceleration: { x: 1, y: 2, z: 3 },
