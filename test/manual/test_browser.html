@@ -250,10 +250,9 @@
             document.getElementById(id).innerHTML = html
         }
 
-        var sensor = new allsensors.NavigatorSensor({ queryPeriod: 1000 })
+        var sensor = new allsensors.GlobalSensor({ queryPeriod: 1000 })
         sensor.listen((state) => {
             var serialized = sensor.serialize(state);
-            debugger
             set("contentJson", JSON.stringify(serialized, null, 4))
 
             const battery = state.battery;
